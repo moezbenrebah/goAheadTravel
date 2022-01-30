@@ -1,0 +1,15 @@
+extends goaheadtravel
+
+block content
+	main.main
+		.login-form
+			h2.heading-secondary.ma-bt-lg log in
+			form.form.form--login
+				.form__group
+					label.form__label(for='email') Your Email
+					input#email.form__input(type='email', placeholder='youremail@example.com', required)
+				.form__group.ma-bt-md
+					label.form__label(for='password') Your Password
+					input#password.form__input(type='password', placeholder='********', required, minlength='8')
+				.form__group
+					button.btn.btn--green Login

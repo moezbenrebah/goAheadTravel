@@ -1,0 +1,10 @@
+extends goaheadtravel
+
+block content
+  main.main
+    .error
+      .error__title
+        h2.heading-secondary.heading-secondary--error Aouch! Something went wrong!   
+        h2.error__emoji 😢 🤯
+        //-img.error__title-img(src=`/img/Scarecrow.png` alt='Someting went wrong')
+      .error__msg= message
