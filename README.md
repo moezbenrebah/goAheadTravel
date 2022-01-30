@@ -11,7 +11,6 @@
 - [Data Modeling](#data-modeling)
 - [Technologies & Third services](#technologies-third-services)
 - [Coming improvements](#coming-improvements)
-- [LICENSE](#license)
 
 <br><br>
 
