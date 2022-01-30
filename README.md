@@ -4,13 +4,13 @@
 
 ## **Content Overview:**
 
-- [The project main idea](#the)
+- [The project main idea](#the-project-main-idea)
 - [Demo](#demo)
 - [Architecture](#architecture)
-- [Error handling](#Error)
-- [Data Modeling](#Data)
-- [Technologies & Third services](#Technologies_&_Third_services)
-- [coming improvement](#coming)
+- [Error handling](#error-handling)
+- [Data Modeling](#data-modeling)
+- [Technologies & Third services](#technologies-third-services)
+- [Coming improvements](#coming-improvements)
 - [LICENSE](#license)
 
 <br><br>
@@ -21,6 +21,7 @@ The project is a travel booking web application, where users can purchase travel
 <br>
 
 ### **Demo:** (click to redirect to youtube demo video)
+
 <br>
 
 [![](https://img.youtube.com/vi/eAUnlVjOXFw/0.jpg)](https://www.youtube.com/watch?v=eAUnlVjOXFw)
