@@ -10,6 +10,7 @@
 - [Error handling](#error-handling)
 - [Data Modeling](#data-modeling)
 - [Technologies & Third services](#technologies-third-services)
+- [Security features](#security-features)
 - [Coming improvements](#coming-improvements)
 
 <br><br>
@@ -165,6 +166,19 @@ represnting to clients and is the layer that the hole application build around.
 
 <br><br>
 
+### **Security features:**
+
+<br>
+
+As it represents purchasing via card bank feature, the app provides solid and security features to prevent threats and hackers attacks such as:
+- Compromised databases (encrypt password with hash and salt, using SHA256 to encrypt reset password token)
+- Brute force attacks (use bcrypt, rate limiting, maximum login attempts)
+- Cross-site scripting (XSS) attacks (store JWT in HTTPOnly cookies, set especial HTTP headers using helmet package)
+- Denial of service attacks (limit payload data, avoid Evil regular expressions)
+- NoSQL queries injection attacks (implement data sanitization, and use mongoose schema to implement well-defined data type)
+
+<br><br>
+
 ### **coming improvement:**
 
 <br>
@@ -174,3 +188,5 @@ represnting to clients and is the layer that the hole application build around.
 - Send emails to clients
 - Impelement map locations to visit
 - Implement payment
+
+<br><br>
