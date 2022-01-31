@@ -9,7 +9,7 @@
 - [Architecture](#architecture)
 - [Error handling](#error-handling)
 - [Data Modeling](#data-modeling)
-- [Technologies & Third services](#technologies-third-services)
+- [Technologies and Third services](#technologies-and-third-services)
 - [Security features](#security-features)
 - [Coming improvements](#coming-improvements)
 
