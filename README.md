@@ -171,7 +171,7 @@ represnting to clients and is the layer that the hole application build around.
 
 <br>
 
-As it represents purchasing via card bank feature, the app provides solid and security features to prevent threats and hackers attacks such as:
+As it represents purchasing via card bank feature, the app provides solid security features to prevent threats and hackers attacks such as:
 - ***Compromised databases:***
     - encrypt password with hash and salt, using SHA256 to encrypt reset password token.
 - ***Brute force attacks:***
