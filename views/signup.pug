@@ -7,15 +7,19 @@ block content
 			form.form.form--signup
 				.form__group
 					label.form__label(for='name') Your name
-					input#name.form__input(type='text' placeholder='' required='')
+					input#name.form__input(type='text' placeholder='your name' required='')
 				.form__group
 					label.form__label(for='email') Email address
-					input#email.form__input(type='email'   placeholder='you@example.com' required='')
+					input#email.form__input(type='email' placeholder='you@example.com' required='')
 				.form__group.ma-bt-md
 					label.form__label(for='password') Password
 						input#password.form__input(type='password' placeholder='••••••••' required='' minlength='8')
 				.form__group.ma-bt-md
 					label.form__label(for='passwordValidation') Confirm password
 						input#passwordValidation.form__input(type='password' placeholder='••••••••' required='' minlength='8')
-				.form__group
+				.form__group.form__photo-upload
+					//-img.form__user-photo(src=`/img/users/${user.photo}`, alt=`${user.name} photo`)
+					input#photo.form__upload(type='file', accept='image/*', name='photo')
+					label(for='photo') upload profile photo
+				.form__group.right
 					button.btn.btn--green Sign up
