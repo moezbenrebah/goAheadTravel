@@ -23,7 +23,9 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // 1) GLOBAL MIDDLEWARES
+
 app.use(cors());
+
 // Serving static files
 app.use(express.static(path.join(__dirname, './public')));
 
@@ -35,6 +37,7 @@ if (process.env.NODE_ENV === 'development') {
 // ENHANCE APPLICATION SECURITY - Set security HTTP headers
 app.use(helmet({
   contentSecurityPolicy: false,
+  crossOriginEmbedderPolicy: false
 }));
 
 // ENHANCE APPLICATION SECURITY - Limit requests from same API

@@ -7,8 +7,8 @@
     "start": "NODE_ENV=development nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js",
-    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
-    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
+    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url .",
+    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url ."
   },
   "author": "Moez Ben Rebah",
   "license": "ISC",
@@ -40,6 +40,7 @@
     "nodemailer": "^6.7.2",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "nodemon": "^2.0.15",
+    "parcel-bundler": "^1.12.3",
     "pug": "^3.0.2",
     "s": "^1.0.0",
     "sharp": "^0.29.3",

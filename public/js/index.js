@@ -69,7 +69,7 @@ if (updatePasswordForm) {
 }
 
 if (bookBtn) {
-  bookBtn.addEventListener('click', async e => {
+  bookBtn.addEventListener('click', e => {
     e.target.textContent = 'Processing ...';
     const { travelId } = e.target.dataset;
     BookTravel(travelId);

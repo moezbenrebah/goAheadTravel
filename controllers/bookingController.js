@@ -29,7 +29,7 @@ exports.getCheckoutStripe = catchAsyncHandler( async(req, res, next) => {
       {
         name: `${travel.name} Travel`,
         description: travel.summary,
-        images: [`https://www.goaheadtravel.dev/img/tours/${travel.imageCover}`],
+        images: ['https://www.natours.dev/img/tours/tour-1-cover.jpg'],
         amount: travel.price * 100, // the amount is expected to be in cent 1.00$
         currency: 'usd',
         quantity: 1
