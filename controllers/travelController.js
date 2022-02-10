@@ -35,7 +35,7 @@ exports.uploadTourImages = upload.fields([
 
 // Resize travel images with sharp module
 exports.resizeTravelImages = catchAsyncHandler( async(req, res, next) => {
-	console.log(req.files)
+	// console.log(req.files)
 	// Handle the case if there's no images to uploaded
 	if(!req.files.imagesCover || !req.files.images) return next();
 

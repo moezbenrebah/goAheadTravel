@@ -7,6 +7,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 const cors = require('cors')
 
 const ErrHandlingClass = require('./utilities/errorHandlingClass');
@@ -72,6 +73,9 @@ app.use(
     ]
   })
 );
+
+// using commpression module to compress texts (pug, json) send it to client
+app.use(compression());
 
 // Test middleware
 app.use((req, res, next) => {

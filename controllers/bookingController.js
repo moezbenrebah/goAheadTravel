@@ -1,4 +1,4 @@
-require ('dotenv').config({ path: './config.env' });
+require ('dotenv').config();
 const Stripe = require('stripe');
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -29,7 +29,7 @@ exports.getCheckoutStripe = catchAsyncHandler( async(req, res, next) => {
       {
         name: `${travel.name} Travel`,
         description: travel.summary,
-        images: ['https://www.natours.dev/img/tours/tour-1-cover.jpg'],
+        images: [`https://www.goaheadtravel.dev/img/travels/${travel.imageCover}`],
         amount: travel.price * 100, // the amount is expected to be in cent 1.00$
         currency: 'usd',
         quantity: 1
@@ -42,6 +42,4 @@ exports.getCheckoutStripe = catchAsyncHandler( async(req, res, next) => {
     status: 'success',
     session
   });
-
-	//next();
 })

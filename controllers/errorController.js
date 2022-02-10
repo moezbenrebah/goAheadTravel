@@ -8,7 +8,7 @@ const handleCastDBerror = error => {
 
 // handle duplicate field that required unique value
 const handleDuplFieldDBerror = error => {
-	const message = `The travel name ${error.keyValue.name} is already exist`;
+	const message = `${error.keyValue.name} is already exist`;
 	return new ErrHandlingClass(message, 400);
 }
 
@@ -93,7 +93,7 @@ const prodError = (error, req, res) => {
 
 // export error controller module
 module.exports = (error, req, res, next) => {
-	//console.log(error.stack);
+	console.log(error.stack);
 	error.statusCode = error.statusCode || 500;
 	error.status = error.status || 'error';
 

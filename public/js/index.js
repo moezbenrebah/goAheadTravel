@@ -3,6 +3,8 @@ import '@babel/polyfill';
 import { login, logout } from './login';
 import { signup } from './signup';
 import { updateSettings } from './updateSettings';
+import { forgotPassword } from './forgotpassword';
+import { resetPassword } from './resetpassword'
 import { BookTravel } from './stripe';
 
 
@@ -10,6 +12,8 @@ const loginForm = document.querySelector('.form--login');
 const logOut = document.querySelector('.nav__el--logout');
 const signupForm = document.querySelector('.form--signup');
 const updateSettingsForm = document.querySelector('.form-user-data');
+const forgotPasswordForm = document.querySelector('.forgotpassword-form');
+const resetPasswordForm = document.querySelector('.resetpassword--form');
 const updatePasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-travel');
 
@@ -29,13 +33,41 @@ if (signupForm) {
 if (loginForm) {
 	loginForm.addEventListener('submit', e => {
 		e.preventDefault();
-		const email = document.getElementById('email').value;
-		const password = document.getElementById('password').value;
+		const email = document.querySelector('input#email').value;
+		const password = document.querySelector('input#password').value;
 		login(email, password);
+
+    // clear fields
+    document.querySelector('input#email').value = '';
+    document.querySelector('input#password').value = '';
 	});
 };
 
-if (logOut) logOut.addEventListener('click', logout)
+if (forgotPasswordForm) {
+  forgotPasswordForm.addEventListener('submit', e => {
+    e.preventDefault();
+    // display feedback to users
+    document.getElementById('reset-btn').textContent = 'Resetting...';
+
+    const email = document.querySelector('input#email').value;
+    forgotPassword(email);
+
+    // clear email field
+    document.querySelector('input#email').value = '';
+  });
+};
+
+if (resetPasswordForm) {
+  resetPasswordForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const password = document.querySelector('input#password').value;
+    const passwordValidation = document.querySelector('input#passwordValidation').value;
+    const token = document.querySelector('input#resetToken').value;
+    await resetPassword(password, passwordValidation, token);
+  })
+}
+
+if (logOut) logOut.addEventListener('click', logout);
 
 if (updateSettingsForm) {
   updateSettingsForm.addEventListener('submit', e => {

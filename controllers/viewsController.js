@@ -43,7 +43,20 @@ exports.myAccount = (req, res) => {
 	res.status(200).render('profile', {
 		title: 'take a look at your account'
 	});
-}
+};
+
+exports.forgotPassword = (req, res) => {
+	res.status(200).render('forgotPassword', {
+		title: 'forgotpassword'
+	});
+};
+
+exports.resetPassword = (req, res) => {
+  res.status(200).render('resetPassword', {
+		title: 'reset password',
+		token: req.params.token
+	});
+};
 
 exports.updateUserData = catchAsyncHandler(async (req, res, next) => {
   const updatedUser = await User.findByIdAndUpdate(

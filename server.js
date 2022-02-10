@@ -8,7 +8,7 @@ process.on('uncaughtException', error => {
   process.exit(1);
 });
 
-dotenv.config({ path: './config.env' });
+dotenv.config();
 
 const DataBase = process.env.DATABASE.replace(
   '<PASSWORD>',
@@ -17,7 +17,7 @@ const DataBase = process.env.DATABASE.replace(
 
 mongoose.connect(DataBase, {useNewUrlParser: true}).then(() => console.log('DB Established ...'));	
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 3000;
 
 // START SERVER
 const server = app.listen(port, () => console.log(`App running on ${port} ...`));

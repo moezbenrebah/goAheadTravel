@@ -38,7 +38,7 @@ const genResJWT = (user, statusCode, res) => {
 	})
 }
 
-// Sign up users
+// Sign up users & send to users the welcome email
 exports.signUp = catchAsyncHandler(async (req, res, next) => {
   const newUser = await User.create({
 		name: req.body.name,
@@ -164,7 +164,7 @@ exports.isLoggedIn = catchAsyncHandler(async (req, res, next) => {
 	next();
 });
 
-//
+// authorization by role
 exports.authorization = (...roles) => (req, res, next) => {
 	// "roles" is an array of authorize user with admin role, 
 	// to enable certain access to certain routes (for now just for admin)
@@ -191,7 +191,7 @@ exports.forgotPassword = catchAsyncHandler(async (req, res, next) => {
 
 	try {
 		// send that token to user's email (dev/prod)
-		const passwordResetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetpassword/${randomToken}`;
+		const passwordResetURL = `${req.protocol}://${req.get('host')}/resetpassword/${randomToken}`;
 		
 		await new Email(user, passwordResetURL).sendPasswordReset();
 	
