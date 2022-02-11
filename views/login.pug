@@ -11,5 +11,10 @@ block content
 				.form__group.ma-bt-md
 					label.form__label(for='password') Your Password
 					input#password.form__input(type='password', placeholder='********', required, minlength='8')
-				.form__group
+				.form__group.right
 					button.btn.btn--green Login
+				.form__group
+					a.left.span-all-rows#forgotPasswordLink(href='/forgotpassword') forgot my password
+					.right
+					a.span-all-rows#forgotPasswordLink(href="/signup") Don't have an account? Create one
+
