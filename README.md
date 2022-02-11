@@ -189,11 +189,11 @@ As it represents purchasing via card bank feature, the app provides solid securi
 
 <br>
 
-- Implement booking schema
-- Upload images
-- Send emails to clients
+- Implement ratings and reviews directly in the web application
+- Add like travel as a feature
+- Add all reviews per user
+- Add the manage page with all features for the administrator
 - Impelement map locations to visit
-- Implement payment
 - Upload the application
 
 <br>

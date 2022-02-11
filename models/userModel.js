@@ -102,9 +102,9 @@ userSchema.methods.genResetPassToken = function() {
 	const randomToken = crypto.randomBytes(64).toString('hex');
 	this.passwordResetToken = crypto.createHash('sha256').update(randomToken).digest('hex');
 
-	console.log({ randomToken }, this.passwordResetToken)
+	// console.log({ randomToken }, this.passwordResetToken)
 
-	this.passwordResetExpires = Date.now() + 5 * 60 * 1000;
+	this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
 	return randomToken;
 }

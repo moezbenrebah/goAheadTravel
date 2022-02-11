@@ -38,14 +38,14 @@ if (process.env.NODE_ENV === 'development') {
 // ENHANCE APPLICATION SECURITY - Set security HTTP headers
 app.use(helmet({
   contentSecurityPolicy: false,
-  crossOriginEmbedderPolicy: false
+  crossOriginEmbedderPolicy: false // fix sameorigin cors issue in order to render stripe checkout session 
 }));
 
 // ENHANCE APPLICATION SECURITY - Limit requests from same API
 const limiter = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 1000,
-  message: 'Too many requests from this IP, please try again in an hour!'
+  message: 'Too many requests from this IP, please try again later!'
 });
 app.use('/api', limiter);
 

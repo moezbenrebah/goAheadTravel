@@ -1,5 +1,5 @@
 const catchAsyncHandler = require('../utilities/catchAsyncHandler');
-const ErrHandlingClass = require('../utilities/errorHandlingClass')
+const ErrHandlingClass = require('../utilities/errorHandlingClass');
 
 // Delete Model factory handler
 exports.deleteOnce = currentModel => catchAsyncHandler(async (req, res, next) => {

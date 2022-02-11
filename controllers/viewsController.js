@@ -1,5 +1,6 @@
 const Travel = require('../models/travelModel');
 const User = require('../models/userModel');
+const Booking = require('../models/bookingModel');
 const catchAsyncHandler = require('../utilities/catchAsyncHandler');
 const ErrHandlingClass = require('../utilities/errorHandlingClass');
 
@@ -76,3 +77,19 @@ exports.updateUserData = catchAsyncHandler(async (req, res, next) => {
     user: updatedUser
   });
 });
+
+// get all booked travels per user
+exports.myBookedTravels = catchAsyncHandler( async(req, res, next) => {
+	// find all booked travels
+	const bookedTravels = await Booking.find({ user: req.user.id });
+
+	// find all travels that includes the above id (bookedTravels)
+	const travelsIds = bookedTravels.map(item => item.travel);
+	const travels = await Travel.find({ _id: { $in: travelsIds } });
+
+	// Render the page that contains the booked travels
+	res.status(200).render('overview', {
+		title: 'My travels',
+		travels
+	})
+})
