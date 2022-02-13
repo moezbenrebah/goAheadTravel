@@ -7,6 +7,7 @@
 - [The project main idea](#the)
 - [Demo](#demo)
 - [Architecture](#architecture)
+- [APIs](#apis)
 - [Error handling](#Error)
 - [Data Modeling](#Data)
 - [Technologies & Third services](#technologies)
@@ -27,6 +28,12 @@ The project is a travel booking web application, where users can purchase travel
 
 <br><br>
 
+### **APIs:**
+
+Please refer to this <a href="https://documenter.getpostman.com/view/14950888/UVeFNS9W#da0f790e-0ffb-471b-891c-006a08e07150" target="_blank">link</a> to get more details about APIs.
+
+<br>
+
 ### **Architecture:**
 
 <br>
@@ -36,21 +43,22 @@ The project is a travel booking web application, where users can purchase travel
 ├── app.js
 ├── controllers
 │   ├── authController.js
+│   ├── bookingController.js
 │   ├── errorController.js
 │   ├── factoryHandler.js
 │   ├── ratingController.js
 │   ├── travelController.js
 │   ├── userController.js
 │   └── viewsController.js
-├── data
-│   ├── import-data.js
-│   ├── ratings.json
-│   ├── travels.json
-│   └── users.json
+├── dev-data
+│   └── data
+│       ├── import-data.js
 ├── models
+│   ├── bookingModel.js
 │   ├── ratingModel.js
 │   ├── travelModel.js
 │   └── userModel.js
+├── package.json
 ├── public
 │   ├── css
 │   │   └── styles.css
@@ -61,11 +69,15 @@ The project is a travel booking web application, where users can purchase travel
 │       ├── alerts.js
 │       ├── bundle.js
 │       ├── bundle.js.map
+│       ├── forgotpassword.js
 │       ├── index.js
 │       ├── login.js
+│       ├── resetpassword.js
 │       ├── signup.js
+│       ├── stripe.js
 │       └── updateSettings.js
 ├── routes
+│   ├── bookingRoutes.js
 │   ├── ratingRoutes.js
 │   ├── travelRoutes.js
 │   ├── userRoutes.js
@@ -78,13 +90,20 @@ The project is a travel booking web application, where users can purchase travel
 │   └── nodemail.js
 └── views
     ├── content.pug
+    ├── emailTemplates
+    │   ├── emailStyle.pug
+    │   ├── goAheadTravelEmail.pug
+    │   ├── passwordReset.pug
+    │   └── welcome.pug
     ├── Error.pug
     ├── footer.pug
+    ├── forgotPassword.pug
     ├── goaheadtravel.pug
     ├── header.pug
     ├── login.pug
     ├── overview.pug
     ├── profile.pug
+    ├── resetPassword.pug
     ├── reviewCard.pug
     ├── signup.pug
     └── travel.pug
@@ -110,6 +129,8 @@ This project builds with NodeJs, MongoDB, JavaScript, CSS, and PUG.
 - <ins>Nodemailer:</ins> for sending emails to user (example: reset password)
 - <ins>cryptojs:</ins> for encrypt password and token
 - <ins>JSON Web Token (JWT):</ins> for authenticate users
+- <ins>Stripe:</ins> for online payments via bank card
+- <ins>Mailgun:</ins> for emailing users whenver they signed up or attempt to update their passwords
 
 <br>
 
@@ -162,6 +183,7 @@ represnting to clients and is the layer that the hole application build around.
 - Strip
 - Mailtrap
 - Mapbox
+- Mailgun
 
 <br><br>
 
@@ -169,8 +191,34 @@ represnting to clients and is the layer that the hole application build around.
 
 <br>
 
-- Implement booking schema
-- Upload images
-- Send emails to clients
-- Impelement map locations to visit
-- Implement payment
+- Impelement map along with locations to visit
+- improve users + admin&lead-guide profile dashbord (booked travels, list of all users, travels, list of users ratings ...)
+- Improve the web application responsiveness and design
+
+<br><br>
+
+### **LICENSE:**
+
+```
+MIT License
+
+Copyright (c) 2022 Moez
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
