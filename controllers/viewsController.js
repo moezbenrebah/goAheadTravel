@@ -80,7 +80,7 @@ exports.updateUserData = catchAsyncHandler(async (req, res, next) => {
 
 // get all booked travels per user
 exports.myBookedTravels = catchAsyncHandler( async(req, res, next) => {
-	// find all booked travels
+	// find all booked travels based on user id
 	const bookedTravels = await Booking.find({ user: req.user.id });
 
 	// find all travels that includes the above id (bookedTravels)

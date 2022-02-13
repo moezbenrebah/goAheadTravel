@@ -4,15 +4,14 @@
 
 ## **Content Overview:**
 
-- [The project main idea](#the-project-main-idea)
+- [The project main idea](#the)
 - [Demo](#demo)
 - [Architecture](#architecture)
-- [Error handling](#error-handling)
-- [Data Modeling](#data-modeling)
-- [Technologies and Third services](#technologies-and-third-services)
-- [Security features](#security-features)
-- [Coming improvements](#coming-improvements)
-- [License](#license)
+- [Error handling](#Error)
+- [Data Modeling](#Data)
+- [Technologies & Third services](#technologies)
+- [coming improvement](#coming)
+- [LICENSE](#license)
 
 <br><br>
 
@@ -22,7 +21,6 @@ The project is a travel booking web application, where users can purchase travel
 <br>
 
 ### **Demo:** (click to redirect to youtube demo video)
-
 <br>
 
 [![](https://img.youtube.com/vi/eAUnlVjOXFw/0.jpg)](https://www.youtube.com/watch?v=eAUnlVjOXFw)
@@ -165,72 +163,14 @@ represnting to clients and is the layer that the hole application build around.
 - Mailtrap
 - Mapbox
 
-<br>
-
-### **Security features:**
-
-<br>
-
-As it represents purchasing via card bank feature, the app provides solid security features to prevent threats and hackers attacks such as:
-- ***Compromised databases:***
-    - encrypt password with hash and salt, using SHA256 to encrypt reset password token.
-- ***Brute force attacks:***
-    - use bcrypt, rate limiting, maximum login attempts.
-- ***Cross-site scripting (XSS) attacks:***
-    - store JWT in HTTPOnly cookies, set especial HTTP headers using helmet package.
-- ***Denial of service attacks:***
-    - limit payload data, avoid Evil regular expressions.
-- ***NoSQL queries injection attacks:***
-    - implement data sanitization, and use mongoose schema to implement well-defined data type.
-
-<br>
+<br><br>
 
 ### **coming improvement:**
 
 <br>
 
-- Implement ratings and reviews directly in the web application
-- Add like travel as a feature
-- Add all reviews per user
-- Add the manage page with all features for the administrator
+- Implement booking schema
+- Upload images
+- Send emails to clients
 - Impelement map locations to visit
-- Upload the application
-
-<br>
-
-***Find this project useful ? :star_struck:***
-
-- Please support my project by clicking the :star: button on the upper right of this page :v:
-
-<br>
-
-### **License:**
-
-<br>
-
-```
-MIT License
-
-Copyright (c) 2022 Moez
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
-
-<br>
-
+- Implement payment

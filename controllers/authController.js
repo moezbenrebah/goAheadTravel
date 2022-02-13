@@ -11,18 +11,17 @@ const genToken = id => jwt.sign({ id }, process.env.SECRET, {
 	expiresIn: process.env.EXPIRE_TIME_JWT
 })
 
-// Grab the JWT (within a cookie) and send it along with a response and statusCode to user
-const genResJWT = (user, statusCode, res) => {
+// Grab the JWT (within a cookie) and send it along with a response and statusCode to user ("req"  whenever the app is deployed)
+const genResJWT = (user, statusCode, req, res) => {
 	const token = genToken(user._id);
 
 	const cookieEnv = {
 		expires: new Date(
 			Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
 		),
-		httpOnly: true // denied the access or the modify of the cookie by the browser
+		httpOnly: true, // denied the access or the modify of the cookie by the browser
+		secure: req.secure || req.headers['x-forwarded-proto'] === 'https' // send cookie only in encrypted connection "https"
 	}
-
-	if (process.env.NODE_ENV === 'production') cookieEnv.secure = true; // send cookie only in encrypted connection "https"
 
 	res.cookie('jwt', token, cookieEnv)
 
@@ -50,7 +49,7 @@ exports.signUp = catchAsyncHandler(async (req, res, next) => {
 	const url = `${req.protocol}://${req.get('host')}/me`;
 	await new Email(newUser, url).sendWelcome();
 
-	genResJWT(newUser, 201, res);
+	genResJWT(newUser, 201, req, res);
 });
 
 // Sign in users
@@ -69,7 +68,7 @@ exports.signIn = catchAsyncHandler(async (req, res, next) => {
 	}
 
 	// if the above tests passed show success result + user token
-	genResJWT(user, 200, res);
+	genResJWT(user, 200, req, res);
 });
 
 // Log out users
@@ -237,7 +236,7 @@ exports.resetPassword = catchAsyncHandler(async (req, res, next) => {
 
 	// Step 3: Update the "passwordChangedAt" date
 	// Step 4: Log the user in and send a JWT
-	genResJWT(user, 200, res);
+	genResJWT(user, 200, req, res);
 });
 
 // Updating logged in user password
@@ -257,5 +256,5 @@ exports.updatePassword = catchAsyncHandler( async(req, res, next) => {
 	await user.save()
 
 	// Log user in, and send a JWT
-	genResJWT(user, 200, res);
+	genResJWT(user, 200, req, res);
 })

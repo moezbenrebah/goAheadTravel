@@ -20,6 +20,9 @@ const viewsRouter = require('./routes/viewsRoutes');
 
 const app = express();
 
+// trust heroku proxy
+app.enable('trust proxy');
+
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
