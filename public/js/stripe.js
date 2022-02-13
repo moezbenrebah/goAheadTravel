@@ -11,7 +11,7 @@ export const BookTravel = async travelId => {
 			`/api/v1/bookings/checkout-stripe/${travelId}`
 		)
 		//console.log(session)
-		const stripe = await loadStripe('pk_test_51KOktUA1H3VpG3RzpJaw3scJ5F8EoaqeITHyjhQf5I9HKICdXef672PeVTZ3UuE9hyiCYSRbV0UyLeYlM6sSha9M002uPlCVpg');
+		const stripe = await loadStripe(process.env.STRIPE_PUBLIC_KEY);
 		// redirect to checkout
 		await stripe.redirectToCheckout({
       sessionId: session.data.session.id
