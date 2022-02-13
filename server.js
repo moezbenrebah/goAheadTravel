@@ -17,7 +17,7 @@ const DataBase = process.env.DATABASE.replace(
 
 mongoose.connect(DataBase, {useNewUrlParser: true}).then(() => console.log('DB Established ...'));	
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 5000;
 
 // START SERVER
 const server = app.listen(port, () => console.log(`App running on ${port} ...`));
