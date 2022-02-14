@@ -32,7 +32,7 @@ process.on('unhandledRejection', error => {
   });
 });
 
-// Handle SIGTERM heroku signals
+// Handle heroku SIGTERM signals
 process.on('SIGTERM', () => {
   console.log('SIGTERM recieved, shutdown gracefully!')
   server.close(() => {

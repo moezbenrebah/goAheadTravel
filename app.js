@@ -28,7 +28,26 @@ app.set('views', path.join(__dirname, 'views'));
 
 // 1) GLOBAL MIDDLEWARES
 
+// Enable cross origin resources share
+/**
+In case we have our APIs in a subdomain and the front-end in another domain, example:
+api.goaheadtravel.com and goaheadtravel.com, the cors implementation will be like so:
+app.use(
+  cors({
+    origin: 'https://www.goaheadtravel.com'
+  });
+)
+*/
 app.use(cors());
+
+
+/**
+Enabel cors for simple and non simple-requests (put, patch, delete)
+or requests that sends cookies or non-stander headers by using preflight phase
+to allow non-simple requests in all routes
+*/
+
+app.options('*', cors());
 
 // Serving static files
 app.use(express.static(path.join(__dirname, './public')));
