@@ -58,7 +58,7 @@ const bookingBasedCheckout = async session => {
 }
 
 // create booking based on successful stripe checkout session
-exports.webhookCheckout = (req, res, next) => {
+exports.webhookCheckout = (req, res) => {
   const signature = req.headers['stripe-signature'];
 
   let event;
