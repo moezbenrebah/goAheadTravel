@@ -23,7 +23,7 @@ exports.getCheckoutStripe = catchAsyncHandler( async(req, res, next) => {
 		// Information about the checkout session
     payment_method_types: ['card'],
     // success_url: `${req.protocol}://${req.get('host')}/?travel=${req.params.travelId}&user=${req.user.id}&price=${travel.price}`,
-    success_url: `${req.protocol}://${req.get('host')}/my-booked-travels`,
+    success_url: `${req.protocol}://${req.get('host')}/`,
     cancel_url: `${req.protocol}://${req.get('host')}/travel/${travel.slug}`,
     customer_email: req.user.email,
     client_reference_id: req.params.travelId,
