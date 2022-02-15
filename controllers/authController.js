@@ -191,7 +191,6 @@ exports.forgotPassword = catchAsyncHandler(async (req, res, next) => {
 	try {
 		// send that token to user's email (dev/prod)
 		const passwordResetURL = `${req.protocol}://${req.get('host')}/resetpassword/${randomToken}`;
-		//const passwordResetURL = `$https://goaheadtravel.herokuapp.com/resetpassword/${randomToken}`;
 		
 		await new Email(user, passwordResetURL).sendPasswordReset();
 	

@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.use(authController.grantAcess);
 
-// Create a booking based on a successful stripe checkout session
+// Get stripe checkout session
 router.get('/checkout-stripe/:travelId',  authController.grantAcess, bookingController.getCheckoutStripe);
 
 router.use(authController.authorization('admin', 'lead-guide'));
