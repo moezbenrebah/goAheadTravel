@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
@@ -81,7 +82,7 @@ const limiter = rateLimit({
 app.use('/api', limiter);
 
 // use the stripe webhook in order to create a new booking travel
-app.post('/webhook-checkout', express.raw({ type: '*/*' }), bookingController.webhookCheckout)
+app.post('/webhook-checkout', bodyParser.raw({ type: '*/*' }), bookingController.webhookCheckout)
 
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
