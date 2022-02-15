@@ -42,7 +42,6 @@ app.use(
 */
 app.use(cors());
 
-
 /**
 Enabel cors for simple and non simple-requests (put, patch, delete)
 or requests that sends cookies or non-stander headers by using preflight phase
@@ -65,8 +64,8 @@ app.use(helmet.contentSecurityPolicy({
       defaultSrc: ["'self'", 'https:', 'http:', 'data:', 'ws:'],
       baseUri: ["'self'"],
       fontSrc: ["'self'", 'https:', 'http:', 'data:'],
-      scriptSrc: ["'self'", 'https:', 'http:', 'blob:', 'unsafe-inline'],
-      styleSrc: ["'self'", 'https:', 'http:', 'unsafe-inline'],
+      scriptSrc: ["'self'", 'https:', 'http:', 'blob:', 'unsafe-inline', 'ws:'],
+      styleSrc: ["'self'", 'https:', 'http:', 'unsafe-hashes', 'unsafe-inline'],
     },
   // contentSecurityPolicy: false,
   // crossOriginEmbedderPolicy: false // fix sameorigin cors issue in order to render stripe checkout session 
