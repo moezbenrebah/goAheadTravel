@@ -23,7 +23,7 @@ exports.getCheckoutStripe = catchAsyncHandler( async(req, res, next) => {
 		// Information about the checkout session
     payment_method_types: ['card'],
     // success_url: `${req.protocol}://${req.get('host')}/?travel=${req.params.travelId}&user=${req.user.id}&price=${travel.price}`,
-    success_url: `${req.protocol}://${req.get('host')}/`,
+    success_url: `${req.protocol}://${req.get('host')}/my-booked-travels?alert=booking`,
     cancel_url: `${req.protocol}://${req.get('host')}/travel/${travel.slug}`,
     customer_email: req.user.email,
     client_reference_id: req.params.travelId,
@@ -78,15 +78,6 @@ exports.webhookCheckout = (req, res, next) => {
 
   res.status(200).json({ recieved: true })
 }
-// exports.bookingBasedSuccessSession = catchAsyncHandler( async(req, res, next) => {
-//   const { travel, user, price } = req.query;
-
-//   if (!travel && !user && !price) return next();
-
-//   await Booking.create({ travel, user, price });
-//   res.redirect(req.originalUrl.split('?')[0]);
-// });
-
 
 exports.getAllBookings = catchAsyncHandler(async (req, res, next) => {
 	const bookings = await Booking.find();
