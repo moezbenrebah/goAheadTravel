@@ -59,9 +59,16 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // ENHANCE APPLICATION SECURITY - Set security HTTP headers
-app.use(helmet({
-  contentSecurityPolicy: false,
-  crossOriginEmbedderPolicy: false // fix sameorigin cors issue in order to render stripe checkout session 
+app.use(helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'", 'https:', 'http:', 'data:', 'ws:'],
+      baseUri: ["'self'"],
+      fontSrc: ["'self'", 'https:', 'http:', 'data:'],
+      scriptSrc: ["'self'", 'https:', 'http:', 'blob:'],
+      styleSrc: ["'self'", 'https:', 'http:', 'unsafe-inline'],
+    },
+  // contentSecurityPolicy: false,
+  // crossOriginEmbedderPolicy: false // fix sameorigin cors issue in order to render stripe checkout session 
 }));
 
 // ENHANCE APPLICATION SECURITY - Limit requests from same API
