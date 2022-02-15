@@ -49,7 +49,7 @@ exports.getCheckoutStripe = catchAsyncHandler( async(req, res, next) => {
 });
 
 // Based on the data from the successful stripe checkout session we create a new booking in DB
-const bookingBasedCheckout = async session => {
+const bookingBasedCheckout = async (session) => {
   const travel = session.client_reference_id;
   const user = (await User.findOne({ email: session.customer_email })).id;
   const price = session.display_items[0].amount / 100;
