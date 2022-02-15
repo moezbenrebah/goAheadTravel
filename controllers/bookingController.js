@@ -29,7 +29,7 @@ exports.getCheckoutStripe = catchAsyncHandler( async(req, res, next) => {
     client_reference_id: req.params.travelId,
 
 		// Information about the travel
-    line_items: [
+    display_items: [
       {
         name: `${travel.name} Travel`,
         description: travel.summary,
