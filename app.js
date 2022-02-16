@@ -72,7 +72,7 @@ app.use(
 //   bookingController.webhookCheckout
 // );
 
-app.post('/webhook-checkout')
+app.route('/webhook-checkout')
   .post(express.raw({ type: "application/json" }), bookingController.webhookCheckout);
 
 app.use(viewsRouter);
