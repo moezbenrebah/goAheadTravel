@@ -72,10 +72,11 @@ app.use(
 //   bookingController.webhookCheckout
 // );
 
-app.route('/webhook-checkout')
-  .post(express.raw({ type: "application/json" }), bookingController.webhookCheckout);
-
-app.use(viewsRouter);
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: "application/json" }),
+  bookingController.webhookCheckout
+);
 
 // ENHANCE APPLICATION SECURITY - Limit requests from same API
 const limiter = rateLimit({
