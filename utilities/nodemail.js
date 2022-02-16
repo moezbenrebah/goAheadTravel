@@ -15,19 +15,17 @@ module.exports = class Email {
 		// sending emails in production environment
     if (process.env.NODE_ENV === 'production') {
       // Using mailgun to sending emails
-      return nodemailer.createTransport(
-        nodeMailgun({
-          auth: {
-            api_key: process.env.MAILGUN_API_KEY,
-            domain: process.env.MAILGUN_DOMAIN
-          }
-          // Using sendgrid to sending emails
-          // auth: {
-          //   user: process.env.SENDGRID_USERNAME,
-          //   pass: process.env.SENDGRID_PASSWORD
-          // }
-        })
-      );
+      return nodemailer.createTransport({
+        // auth: {
+        //   api_key: process.env.MAILGUN_API_KEY,
+        //   domain: process.env.MAILGUN_DOMAIN
+        // }
+        //Using sendgrid to sending emails
+        auth: {
+          user: process.env.SENDGRID_USERNAME,
+          pass: process.env.SENDGRID_PASSWORD
+        }
+      });
     }
 		// sending emails in production environment
 		// Using mailtrap to test sending emails features
