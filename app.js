@@ -8,8 +8,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
-const cors = require('cors')
-const Stripe = require('stripe');
+const cors = require('cors');
 
 const ErrHandlingClass = require('./utilities/errorHandlingClass');
 const globalErrorHandler = require('./controllers/errorController');
@@ -19,11 +18,6 @@ const userRouter = require('./routes/userRoutes');
 const ratingRouter = require('./routes/ratingRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
 const viewsRouter = require('./routes/viewsRoutes');
-
-require ('dotenv').config();
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
 
 const app = express();
 
@@ -71,6 +65,18 @@ app.use(
   })
 );
 
+// use the stripe webhook in order to create a new booking travel
+// app.post(
+//   '/webhook-checkout',
+//   express.raw({ 'application/json' }),
+//   bookingController.webhookCheckout
+// );
+
+app.post('/webhook-checkout')
+  .post(express.raw({ type: "application/json" }), bookingController.webhookCheckout);
+
+app.use(viewsRouter);
+
 // ENHANCE APPLICATION SECURITY - Limit requests from same API
 const limiter = rateLimit({
   max: 100,
@@ -78,32 +84,6 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again later!'
 });
 app.use('/api', limiter);
-
-// use the stripe webhook in order to create a new booking travel
-app.post(
-  '/webhook-checkout',
-  express.raw({ inflate: true, limit: '50mb', type: () => true }),
-  (req, res, next) => {
-    const signature = req.headers['stripe-signature'];
-  
-    let event;
-    try {
-      event = stripe.stripe.webhooks.constructEvent(
-        req.body,
-        signature,
-        process.env.STRIPE_WEBHOOKS_SECRET
-      );
-    } catch(error) {
-      return res.status(400).send(`error: ${error.message}`)
-    }
-  
-    if (event.type === 'checkout.session.completed') {
-      bookingController.bookingBasedCheckout(event.data.object);
-    }
-  
-    res.status(200).json({ recieved: true })
-  }
-);
 
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));

@@ -49,11 +49,11 @@ exports.getCheckoutStripe = catchAsyncHandler( async(req, res, next) => {
 });
 
 // Based on the data from the successful stripe checkout session we create a new booking in DB
-exports.bookingBasedCheckout = async (session) => {
+const bookingBasedCheckout = async (session) => {
   try {
     const travel = session.client_reference_id;
     const user = (await User.findOne({ email: session.customer_email })).id;
-    const price = session.line_items[0].amount / 100;
+    const price = session.display_items[0].amount / 100;
 
     await Booking.create({ travel, user, price });
   } catch (error) {
@@ -62,26 +62,26 @@ exports.bookingBasedCheckout = async (session) => {
 }
 
 // create booking based on successful stripe checkout session
-// exports.webhookCheckout = (req, res, next) => {
-//   const signature = req.headers['stripe-signature'];
+exports.webhookCheckout = (req, res, next) => {
+  const signature = req.headers['stripe-signature'];
 
-//   let event;
-//   try {
-//     event = stripe.stripe.webhooks.constructEvent(
-//       req.body,
-//       signature,
-//       process.env.STRIPE_WEBHOOKS_SECRET
-//     );
-//   } catch(error) {
-//     return res.status(400).send(`error: ${error.message}`)
-//   }
+  let event;
+  try {
+    event = stripe.stripe.webhooks.constructEvent(
+      req.body,
+      signature,
+      process.env.STRIPE_WEBHOOKS_SECRET
+    );
+  } catch(error) {
+    return res.status(400).send(`error: ${error.message}`)
+  }
 
-//   if (event.type === 'checkout.session.completed') {
-//     bookingBasedCheckout(event.data.object);
-//   }
+  if (event.type === 'checkout.session.completed') {
+    bookingBasedCheckout(event.data.object);
+  }
 
-//   res.status(200).json({ recieved: true })
-// }
+  res.status(200).json({ recieved: true })
+}
 
 exports.getAllBookings = catchAsyncHandler(async (req, res, next) => {
 	const bookings = await Booking.find();
