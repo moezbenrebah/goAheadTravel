@@ -9291,7 +9291,7 @@ function () {
           case 3:
             session = _context.sent;
             _context.next = 6;
-            return (0, _stripeJs.loadStripe)('pk_test_51KOktUA1H3VpG3RzpJaw3scJ5F8EoaqeITHyjhQf5I9HKICdXef672PeVTZ3UuE9hyiCYSRbV0UyLeYlM6sSha9M002uPlCVpg');
+            return (0, _stripeJs.loadStripe)("pk_test_51KOktUA1H3VpG3RzpJaw3scJ5F8EoaqeITHyjhQf5I9HKICdXef672PeVTZ3UuE9hyiCYSRbV0UyLeYlM6sSha9M002uPlCVpg");
 
           case 6:
             stripe = _context.sent;
@@ -9771,7 +9771,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36147" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42729" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
