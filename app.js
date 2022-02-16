@@ -83,7 +83,7 @@ app.use('/api', limiter);
 // use the stripe webhook in order to create a new booking travel
 app.post(
   '/webhook-checkout',
-  bodyParser.raw({type: 'application/json'}),
+  express.raw(),
   (req, res, next) => {
     const signature = req.headers['stripe-signature'];
   
