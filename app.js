@@ -10,6 +10,7 @@ const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
 const cors = require('cors')
+const Stripe = require('stripe');
 
 const ErrHandlingClass = require('./utilities/errorHandlingClass');
 const globalErrorHandler = require('./controllers/errorController');
@@ -19,6 +20,10 @@ const userRouter = require('./routes/userRoutes');
 const ratingRouter = require('./routes/ratingRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
 const viewsRouter = require('./routes/viewsRoutes');
+
+require ('dotenv').config();
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 
 const app = express();
@@ -79,7 +84,26 @@ app.use('/api', limiter);
 app.post(
   '/webhook-checkout',
   bodyParser.raw({type: 'application/json'}),
-  bookingController.webhookCheckout
+  (req, res, next) => {
+    const signature = req.headers['stripe-signature'];
+  
+    let event;
+    try {
+      event = stripe.stripe.webhooks.constructEvent(
+        req.body,
+        signature,
+        process.env.STRIPE_WEBHOOKS_SECRET
+      );
+    } catch(error) {
+      return res.status(400).send(`error: ${error.message}`)
+    }
+  
+    if (event.type === 'checkout.session.completed') {
+      bookingController.bookingBasedCheckout(event.data.object);
+    }
+  
+    res.status(200).json({ recieved: true })
+  }
 );
 
 // Body parser, reading data from body into req.body
