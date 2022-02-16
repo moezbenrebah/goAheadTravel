@@ -1,5 +1,4 @@
 const path = require('path');
-const bodyParser = require('body-parser');
 const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
@@ -83,7 +82,7 @@ app.use('/api', limiter);
 // use the stripe webhook in order to create a new booking travel
 app.post(
   '/webhook-checkout',
-  express.raw(),
+  express.raw({ inflate: true, limit: '50mb', type: () => true }),
   (req, res, next) => {
     const signature = req.headers['stripe-signature'];
   
