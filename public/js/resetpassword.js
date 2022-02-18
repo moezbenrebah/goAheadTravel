@@ -16,7 +16,7 @@ export const resetPassword = async (password, passwordValidation, token) => {
     if (res.data.status === 'success') {
 			showAlert('success', 'your new password was updated correctly');
 			window.setTimeout(() => {
-				location.assign('/login');
+				location.assign('/');
 			}, 1000);
 		}
   } catch (error) {

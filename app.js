@@ -68,15 +68,9 @@ app.use(
 // use the stripe webhook in order to create a new booking travel
 // app.post(
 //   '/webhook-checkout',
-//   express.raw({ 'application/json' }),
+//   express.raw({ type: "application/json" }),
 //   bookingController.webhookCheckout
 // );
-
-app.post(
-  '/webhook-checkout',
-  express.raw({ type: "application/json" }),
-  bookingController.webhookCheckout
-);
 
 // ENHANCE APPLICATION SECURITY - Limit requests from same API
 const limiter = rateLimit({

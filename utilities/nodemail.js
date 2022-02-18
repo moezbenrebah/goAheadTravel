@@ -1,5 +1,4 @@
 const nodemailer = require('nodemailer');
-const nodeMailgun = require('nodemailer-mailgun-transport')
 const pug = require('pug');
 const htmlToText = require('html-to-text');
 
@@ -16,15 +15,23 @@ module.exports = class Email {
     if (process.env.NODE_ENV === 'production') {
       // Using mailgun to sending emails
       return nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL_FROM,
+          pass: process.env.EMAIL_FROM_PASS
+        },
+        tls: {
+          rejectUnauthorized: false
+        }
         // auth: {
         //   api_key: process.env.MAILGUN_API_KEY,
         //   domain: process.env.MAILGUN_DOMAIN
         // }
         //Using sendgrid to sending emails
-        auth: {
-          user: process.env.SENDGRID_USERNAME,
-          pass: process.env.SENDGRID_PASSWORD
-        }
+        // auth: {
+        //   user: process.env.SENDGRID_USERNAME,
+        //   pass: process.env.SENDGRID_PASSWORD
+        // }
       });
     }
 		// sending emails in production environment
