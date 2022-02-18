@@ -11,9 +11,9 @@ module.exports = class Email {
   }
 
   newTransport() {
-		// sending emails in production environment
+    // sending emails in production environment
     if (process.env.NODE_ENV === 'production') {
-      // Using mailgun to sending emails
+      // Using gamil to sending emails
       return nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -23,26 +23,17 @@ module.exports = class Email {
         tls: {
           rejectUnauthorized: false
         }
-        // auth: {
-        //   api_key: process.env.MAILGUN_API_KEY,
-        //   domain: process.env.MAILGUN_DOMAIN
-        // }
-        //Using sendgrid to sending emails
-        // auth: {
-        //   user: process.env.SENDGRID_USERNAME,
-        //   pass: process.env.SENDGRID_PASSWORD
-        // }
       });
     }
-		// sending emails in production environment
-		// Using mailtrap to test sending emails features
+
+    // Using mailtrap to test sending emails features
     return nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
-			port: 2525,
-			auth: {
-				user: process.env.EMAIL_USERNAME,
-				pass: process.env.EMAIL_PASSWORD
-			}
+      port: 2525,
+      auth: {
+	user: process.env.EMAIL_USERNAME,
+	pass: process.env.EMAIL_PASSWORD
+      }
     });
   }
 
@@ -75,7 +66,7 @@ module.exports = class Email {
   async sendPasswordReset() {
     await this.send(
       'passwordReset',
-      'Your password reset token (valid for only 5 minutes)'
+      'Your password reset token (valid for only 10 minutes)'
     );
   }
 };
