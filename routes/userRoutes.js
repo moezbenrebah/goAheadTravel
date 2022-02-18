@@ -26,14 +26,14 @@ router.get('/me', authController.authorization('admin', 'user'), userController.
 router.use(authController.authorization('admin'));
 
 router
-	.route('/')
-	.get(userController.getAllUsers)
-	.post(userController.addUser);
+  .route('/')
+  .get(userController.getAllUsers)
+  .post(userController.addUser);
 
 router
-	.route('/:id')
-	.get(userController.getUser)
-	.patch(userController.updateUser)
-	.delete(userController.deleteUser);
+  .route('/:id')
+  .get(userController.getUser)
+  .patch(userController.updateUser)
+  .delete(userController.deleteUser);
 
 module.exports = router;
