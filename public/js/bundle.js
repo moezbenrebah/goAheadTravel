@@ -9088,7 +9088,7 @@ function () {
             if (res.data.status === 'success') {
               (0, _alerts.showAlert)('success', 'your new password was updated correctly');
               window.setTimeout(function () {
-                location.assign('/login');
+                location.assign('/');
               }, 1000);
             }
 
@@ -9771,7 +9771,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44467" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38649" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
