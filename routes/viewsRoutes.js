@@ -9,53 +9,52 @@ const router = express.Router();
 router.get(
   '/',
   bookingController.bookingBasedSuccessSession,
-	authController.isLoggedIn,
-	viewsController.getTravelOverview
+  authController.isLoggedIn,
+  viewsController.getTravelOverview
 );
 
 router.get(
-	'/travel/:slug',
-	authController.isLoggedIn,
-	viewsController.getTravelDetail
+  '/travel/:slug',
+  authController.isLoggedIn,
+  viewsController.getTravelDetail
 );
 
 router.get(
-	'/login',
-	authController.isLoggedIn,
-	viewsController.accountLogin
+  '/login',
+  authController.isLoggedIn,
+  viewsController.accountLogin
 );
 
 router.get(
-	'/forgotpassword',
-	viewsController.forgotPassword
+  '/forgotpassword',
+  viewsController.forgotPassword
 );
 
 router.get(
-	'/resetpassword/:token',
+  '/resetpassword/:token',
   viewsController.resetPassword
 );
 
 router.get(
-	'/signup',
-	viewsController.accountSignup
+  '/signup',
+  viewsController.accountSignup
 );
 
 router.get(
-	'/me',
-	authController.grantAcess,
-	viewsController.myAccount
+  '/me',
+  authController.grantAcess,
+  viewsController.myAccount
 );
 
 router.get(
-	'/my-booked-travels',
-	authController.grantAcess,
-	viewsController.myBookedTravels
+  '/my-booked-travels',
+  authController.grantAcess,
+  viewsController.myBookedTravels
 );
 
 router.post(
-	authController.grantAcess,
-	viewsController.updateUserData
+  authController.grantAcess,
+  viewsController.updateUserData
 );
-  
 
 module.exports = router;
