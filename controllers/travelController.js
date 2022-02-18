@@ -7,144 +7,144 @@ const catchAsyncHandler = require('../utilities/catchAsyncHandler');
 const ErrHandlingClass = require('../utilities/errorHandlingClass');
 const factoryHandler = require('./factoryHandler');
 
-// Store photos in filesystem
+//** Store photos in filesystem
 // The memory storage engine stores the files in memory as `Buffer` objects in order
 // to enable files used by other processes in this case the sharp module
 const multerStorage = multer.memoryStorage()
 
-// Test whether the file uploaded is an image
+//** Test whether the file uploaded is an image
 const multerFilter = (req, file, cb) => {
-	if (file.mimetype.startsWith('image')) {
-		cb(null, true)
-	}else {
-		cb(new ErrHandlingClass('the file uploaded is not an image', 400), false)
-	}
-}
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true)
+  } else {
+    cb(new ErrHandlingClass('the file uploaded is not an image', 400), false)
+  }
+};
 
-// Multer image uploader
+//** Multer image uploader
 const upload = multer({
-	storage: multerStorage,
-	fileFilter: multerFilter
+  storage: multerStorage,
+  fileFilter: multerFilter
 });
 
-// Processing multiple images for the travel update API
+//** Processing multiple images for the travel update API
 exports.uploadTourImages = upload.fields([
   { name: 'imageCover', maxCount: 1 },
   { name: 'images', maxCount: 3 }
 ]);
 
-// Resize travel images with sharp module
+//** Resize travel images with sharp module
 exports.resizeTravelImages = catchAsyncHandler( async(req, res, next) => {
-	// console.log(req.files)
-	// Handle the case if there's no images to uploaded
-	if(!req.files.imagesCover || !req.files.images) return next();
+  // console.log(req.files)
+  // Handle the case if there's no images to uploaded
+  if(!req.files.imagesCover || !req.files.images) return next();
 
-	// resize travel coverImages
-	req.body.imageCover = `travel-${req.params.id}-${Date.now()}-cover.jpeg`
-	await sharp(req.files.imageCover[0].buffer)
-		.resize(2000, 1333)
-		.toFormat('jpeg')
-		.jpeg({quality: 90})
-		.toFile(`./public/img/travels/${req.body.imageCover}`);
+  // resize travel coverImages
+  req.body.imageCover = `travel-${req.params.id}-${Date.now()}-cover.jpeg`
+  await sharp(req.files.imageCover[0].buffer)
+    .resize(2000, 1333)
+    .toFormat('jpeg')
+    .jpeg({quality: 90})
+    .toFile(`./public/img/travels/${req.body.imageCover}`);
 
-	// resize travel images
-	req.body.images = [];
+  // resize travel images
+  req.body.images = [];
 	
-	await Promise.all(
-		req.files.images.map( async(file, index) =>{
-			const filename = `travel-${req.params.id}-${Date.now()}-${index + 1}.jpeg`;
-			await sharp(file.buffer)
-				.resize(2000, 1333)
-				.toFormat('jpeg')
-				.jpeg({quality: 90})
-				.toFile(`./public/img/travels/${filename}`);
+  await Promise.all(
+    req.files.images.map( async(file, index) => {
+      const filename = `travel-${req.params.id}-${Date.now()}-${index + 1}.jpeg`;
+      await sharp(file.buffer)
+        .resize(2000, 1333)
+	.toFormat('jpeg')
+	.jpeg({quality: 90})
+	.toFile(`./public/img/travels/${filename}`);
 			
-			req.body.images.push(filename);
-		})
-	)
+      req.body.images.push(filename);
+    })
+  )
 
-	next();
+  next();
 })
 
-// Middelwares
-// Aliasing middleware to get the most 3 popular travels
+//*** Middelwares
+//** Aliasing middleware to get the most 3 popular travels
 exports.popularTravels = (req, res, next) => {
-	req.query.limit = '3';
-	req.query.sort = 'ratingsAverage';
-	req.query.fields = 'name,price,ratingsAverage,duration,maxSizeGroup';
-	next();
+  req.query.limit = '3';
+  req.query.sort = 'ratingsAverage';
+  req.query.fields = 'name,price,ratingsAverage,duration,maxSizeGroup';
+  next();
 };
 
-// Routes HANDLERS
-// Get all travels stored in the DB
+//*** Routes HANDLERS
+//** Get all travels stored in the DB
 exports.getAllTravels = catchAsyncHandler(async (req, res, next) => {
-	// Execute the query 
-	const apisFeatures = new APIClass(Travel.find(), req.query)
-	.filtering()
-	.sorting()
-	.fieldsLimiting()
-	.pagination();
+  // Execute the query 
+  const apisFeatures = new APIClass(Travel.find(), req.query)
+    .filtering()
+    .sorting()
+    .fieldsLimiting()
+    .pagination();
 
-	const allTravels = await apisFeatures.query;
+  const allTravels = await apisFeatures.query;
 
-	// Send response
-	res.status(200).json({
-		result: allTravels.length,
-		status: 'success',
-		data: {
-			allTravels
-		}
-	});
+  // Send response
+  res.status(200).json({
+    result: allTravels.length,
+    status: 'success',
+    data: {
+      allTravels
+    }
+  });
 });
 
-// Retrieve a specific travel from the DB
+//** Retrieve a specific travel from the DB
 exports.getTravel = factoryHandler.getOnce(Travel, { path: 'ratings' });
 
-// Create a travel and store it in DB
+//** Create a travel and store it in DB
 exports.addtravel = factoryHandler.addOnce(Travel);
 
-// Modifie an existing travel
+//** Modifie an existing travel
 exports.updatetravel = factoryHandler.updateOnce(Travel);
 
-// Delete a travel from the DB
+//** Delete a travel from the DB
 exports.deletetravel = factoryHandler.deleteOnce(Travel);
 
-// get the travels with custom data (mongoDB Aggregation framework)
+//** get the travels with custom data (mongoDB Aggregation framework)
 exports.TravelStat = catchAsyncHandler(async (req, res, next) => {
-	const stat = await Travel.aggregate([
-		{
-			$match: { ratingsAverage: { $gte: 4.5 } }
-		},
-		{
-			$group: {
-				_id: { $toUpper: '$difficulty' },
-				numTravels: { $sum: 1 },
-				totalRatings: { $sum: '$ratingsQuantity' },
-				avgRating: { $avg: '$ratingsAverage' },
-				avgPrice: { $avg: '$price' },
-				minPrice: { $min: '$price' },
-				maxPrice: { $max: '$price' }
-			}
-		},
-		{
-			$sort: { avgPrice: 1 }
-		},
-		/* {
-			$match: {
-				_id: { $ne: 'EASY' } //excluding easy difficulty
-			}
-		} */
-	])
+  const stat = await Travel.aggregate([
+    {
+      $match: { ratingsAverage: { $gte: 4.5 } }
+    },
+    {
+      $group: {
+        _id: { $toUpper: '$difficulty' },
+	numTravels: { $sum: 1 },
+	totalRatings: { $sum: '$ratingsQuantity' },
+	avgRating: { $avg: '$ratingsAverage' },
+	avgPrice: { $avg: '$price' },
+	minPrice: { $min: '$price' },
+	maxPrice: { $max: '$price' }
+      }
+    },
+    {
+      $sort: { avgPrice: 1 }
+    },
+    /* {
+         $match: {
+           _id: { $ne: 'EASY' } //excluding easy difficulty
+         }
+     } */
+  ])
 
-	res.status(200).json({
-		status: 'success',
-		data: {
-			stat
-		}
-	});
+  res.status(200).json({
+    status: 'success',
+    data: {
+      stat
+    }
+  });
 });
 
-// get the travels average/month (mongoDB Aggregation framework)
+//** get the travels average/month (mongoDB Aggregation framework)
 exports.travelPerMonth = catchAsyncHandler(async (req, res, next) => {
 	const year = req.params.year * 1;
 
@@ -195,7 +195,7 @@ exports.travelPerMonth = catchAsyncHandler(async (req, res, next) => {
 	});
 });
 
-// Get a travel within a certain trajectory 
+//** Get a travel within a certain trajectory 
 exports.getTravelWithin = catchAsyncHandler(async (req, res, next) => {
 	const { distance, lnglat, unit } = req.params;
 	const [lat, lng] = lnglat.split(',');
@@ -216,7 +216,7 @@ exports.getTravelWithin = catchAsyncHandler(async (req, res, next) => {
 	})
 });
 
-// Get distance from your location
+//** Get distance from your location
 exports.getDistances = catchAsyncHandler(async (req, res, next) => {
 	const { lnglat, unit } = req.params;
 	const [lat, lng] = lnglat.split(',');
