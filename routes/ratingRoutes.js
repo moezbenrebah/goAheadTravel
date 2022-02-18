@@ -9,15 +9,14 @@ router.use(authController.grantAcess)
 
 // ROUTES
 router
-	.route('/')
-	.get(ratingController.getAllRatings)
-	.post(authController.authorization('user'), ratingController.addRating);
+  .route('/')
+  .get(ratingController.getAllRatings)
+  .post(authController.authorization('user'), ratingController.addRating);
 
 router
-	.route('/:id')
-	.get(ratingController.getRating)
-	.patch(authController.authorization('user', 'admin'), ratingController.updateRating)
-	.delete(authController.authorization('user', 'admin'), ratingController.deleteRating)
-
+  .route('/:id')
+  .get(ratingController.getRating)
+  .patch(authController.authorization('user', 'admin'), ratingController.updateRating)
+  .delete(authController.authorization('user', 'admin'), ratingController.deleteRating)
 
 module.exports = router
