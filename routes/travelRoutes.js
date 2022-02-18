@@ -19,9 +19,10 @@ router.route('/:id').get(travelController.getTravel)
 
 // Geo locations routes
 router
-	.route('/distancesfrom/:lnglat/unit/:unit').get(authController.grantAcess, travelController.getDistances)
+  .route('/distancesfrom/:lnglat/unit/:unit').get(authController.grantAcess, travelController.getDistances)
+
 router
-	.route('/find-travel/:distance/center/:lnglat/unit/:unit').get(authController.grantAcess, travelController.getTravelWithin)
+  .route('/find-travel/:distance/center/:lnglat/unit/:unit').get(authController.grantAcess, travelController.getTravelWithin)
 
 // Restrict to admin & lead-guide
 router.use(authController.grantAcess, authController.authorization('admin', 'lead-guide'))
@@ -29,12 +30,11 @@ router.use(authController.grantAcess, authController.authorization('admin', 'lea
 router.route('/avg-travel-per-month/:year').get(travelController.travelPerMonth)
 
 router
-	.route('/').post(authController.grantAcess, authController.authorization('admin'), travelController.addtravel);
+  .route('/').post(authController.grantAcess, authController.authorization('admin'), travelController.addtravel);
 
 router
-	.route('/:id')
-	.patch(authController.grantAcess, authController.authorization('admin'), travelController.updatetravel)
-	.delete(authController.grantAcess, authController.authorization('admin'), travelController.deletetravel);
-
+  .route('/:id')
+  .patch(authController.grantAcess, authController.authorization('admin'), travelController.updatetravel)
+  .delete(authController.grantAcess, authController.authorization('admin'), travelController.deletetravel);
 
 module.exports = router;
