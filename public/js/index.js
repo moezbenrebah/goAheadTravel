@@ -22,25 +22,25 @@ if (signupForm) {
     e.preventDefault();
     const formField = new FormData();
     formField.append('name', document.getElementById('name').value);
-		formField.append('email', document.getElementById('email').value);
+    formField.append('email', document.getElementById('email').value);
     formField.append('password', document.getElementById('password').value);
     formField.append('passwordValidation', document.getElementById('passwordValidation').value);
 
-		signup(formField, 'data');
+    signup(formField, 'data');
   });
 }
 
 if (loginForm) {
-	loginForm.addEventListener('submit', e => {
-		e.preventDefault();
-		const email = document.querySelector('input#email').value;
-		const password = document.querySelector('input#password').value;
-		login(email, password);
+  loginForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const email = document.querySelector('input#email').value;
+    const password = document.querySelector('input#password').value;
+    login(email, password);
 
     // clear fields
     document.querySelector('input#email').value = '';
     document.querySelector('input#password').value = '';
-	});
+  });
 };
 
 if (forgotPasswordForm) {
@@ -74,10 +74,10 @@ if (updateSettingsForm) {
     e.preventDefault();
     const formField = new FormData();
     formField.append('name', document.getElementById('name').value);
-		formField.append('email', document.getElementById('email').value);
+    formField.append('email', document.getElementById('email').value);
     formField.append('photo', document.getElementById('photo').files[0]);
 
-		updateSettings(formField, 'data');
+    updateSettings(formField, 'data');
   })
 }
 
@@ -87,8 +87,8 @@ if (updatePasswordForm) {
     // Give user feedback
     document.querySelector('.btn--save-password').textContent = 'Updating...';
 
-		const currentPassword = document.getElementById('current-password').value;
-		const password = document.getElementById('password').value;
+    const currentPassword = document.getElementById('current-password').value;
+    const password = document.getElementById('password').value;
     const passwordValidation = document.getElementById('password-validation').value;
     await updateSettings({ currentPassword, password, passwordValidation }, 'password');
 
