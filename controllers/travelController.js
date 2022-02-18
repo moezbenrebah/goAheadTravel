@@ -199,55 +199,54 @@ exports.travelPerMonth = catchAsyncHandler(async (req, res, next) => {
 exports.getTravelWithin = catchAsyncHandler(async (req, res, next) => {
   const { distance, lnglat, unit } = req.params;
   const [lat, lng] = lnglat.split(',');
-	if (!lng || !lat) {
-	  return next(new ErrHandlingClass('latitude or longitude not provide', 400));
-	}
+  if (!lng || !lat) {
+    return next(new ErrHandlingClass('latitude or longitude not provide', 400));
+  }
 
-	const radius = unit === 'km' ? distance / 6378.1 : distance / 3963.2;
+  const radius = unit === 'km' ? distance / 6378.1 : distance / 3963.2;
   const travels = await Travel.find({
     startLocation: { $geoWithin: { $centerSphere: [ [lat, lng], radius ] } }
-	});
+  });
 
-	res.status(200).json({
-		status: 'success',
-		result: travels.length,
-		data: travels
-	});
+  res.status(200).json({
+    status: 'success',
+    result: travels.length,
+    data: travels
+  });
 });
 
 //** Get distance from your location
 exports.getDistances = catchAsyncHandler(async (req, res, next) => {
-	const { lnglat, unit } = req.params;
-	const [lat, lng] = lnglat.split(',');
-	if (!lng || !lat) {
-		return next(new ErrHandlingClass('latitude or longitude not provide', 400));
-	}
+  const { lnglat, unit } = req.params;
+  const [lat, lng] = lnglat.split(',');
+  if (!lng || !lat) {
+    return next(new ErrHandlingClass('latitude or longitude not provide', 400));
+  }
 
-	const multiplier = unit === 'km' ? 0.001 : 0.000621371;
+  const multiplier = unit === 'km' ? 0.001 : 0.000621371;
 
-	// Use aggregation pipline to get distance
-	const distances = await Travel.aggregate([
-		{
-			$geoNear: {
-				near: {
-					type: 'Point',
-					coordinates: [lng * 1, lat * 1]
-				},
-				distanceField: 'distance',
-				distanceMultiplier: multiplier
-			}
-		},
-		{
-			$project: {
-				distance: 1,
-				name: 1
-			}
-		}
-	]);
+  // Use aggregation pipline to get distance
+  const distances = await Travel.aggregate([
+    {
+      $geoNear: {
+	near: {
+	  type: 'Point',
+	  coordinates: [lng * 1, lat * 1]
+        },
+	distanceField: 'distance',
+	distanceMultiplier: multiplier
+      }
+    },
+    {
+      $project: {
+	distance: 1,
+	name: 1
+      }
+    }
+  ]);
 
-	res.status(200).json({
-		status: 'success',
-		data: distances
-	})
-	
+  res.status(200).json({
+    status: 'success',
+    data: distances
+  });
 });
