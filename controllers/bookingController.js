@@ -5,7 +5,6 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const Travel = require('../models/travelModel');
 const Booking = require('../models/bookingModel');
-const User = require('../models/userModel');
 const catchAsyncHandler = require('../utilities/catchAsyncHandler');
 const factoryHandler = require("./factoryHandler");
 
@@ -53,41 +52,7 @@ exports.bookingBasedSuccessSession = catchAsyncHandler( async(req, res, next) =>
   res.redirect(req.originalUrl.split('?')[0]);
 });
 
-// Based on the data from the successful stripe checkout session we create a new booking in DB
-// const bookingBasedCheckout = async (session) => {
-//   try {
-//     const travel = session.client_reference_id;
-//     const user = (await User.findOne({ email: session.customer_email })).id;
-//     const price = session.display_items[0].amount / 100;
-
-//     await Booking.create({ travel, user, price });
-//   } catch (error) {
-//     console.log(error.message)
-//   }
-// }
-
-// create booking based on successful stripe checkout session
-// exports.webhookCheckout = (req, res, next) => {
-//   const signature = req.headers['stripe-signature'];
-
-//   let event;
-//   try {
-//     event = stripe.stripe.webhooks.constructEvent(
-//       req.body,
-//       signature,
-//       process.env.STRIPE_WEBHOOKS_SECRET
-//     );
-//   } catch(error) {
-//     return res.status(400).send(`error: ${error.message}`)
-//   }
-
-//   if (event.type === 'checkout.session.completed') {
-//     bookingBasedCheckout(event.data.object);
-//   }
-
-//   res.status(200).json({ recieved: true })
-// }
-
+// get all booked travels
 exports.getAllBookings = catchAsyncHandler(async (req, res, next) => {
 	const bookings = await Booking.find();
 

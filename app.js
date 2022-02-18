@@ -12,7 +12,6 @@ const cors = require('cors');
 
 const ErrHandlingClass = require('./utilities/errorHandlingClass');
 const globalErrorHandler = require('./controllers/errorController');
-const bookingController = require('./controllers/bookingController')
 const travelRouter = require('./routes/travelRoutes');
 const userRouter = require('./routes/userRoutes');
 const ratingRouter = require('./routes/ratingRoutes');
@@ -64,13 +63,6 @@ app.use(
     crossOriginEmbedderPolicy: false // fix sameorigin cors issue in order to render stripe checkout session 
   })
 );
-
-// use the stripe webhook in order to create a new booking travel
-// app.post(
-//   '/webhook-checkout',
-//   express.raw({ type: "application/json" }),
-//   bookingController.webhookCheckout
-// );
 
 // ENHANCE APPLICATION SECURITY - Limit requests from same API
 const limiter = rateLimit({
