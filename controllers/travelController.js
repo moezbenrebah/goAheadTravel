@@ -146,74 +146,73 @@ exports.TravelStat = catchAsyncHandler(async (req, res, next) => {
 
 //** get the travels average/month (mongoDB Aggregation framework)
 exports.travelPerMonth = catchAsyncHandler(async (req, res, next) => {
-	const year = req.params.year * 1;
+  const year = req.params.year * 1;
 
-	const monthlyAvg = await Travel.aggregate([
-		{
-			$unwind: '$startDates'
-		},
-		{
-			$match: {
-				startDates: {
-					$gte: new Date(`${year}-01-01`),
-					$lte: new Date(`${year}-12-31`)
-				}
-			}
-		},
-		{
-			$group: {
-				_id: { $month: '$startDates' },
-				numTravelsPerMonth: { $sum: 1},
-				travels: { $push: '$name' }
-			}
-		},
-		{
-			$addFields: {
-				month: '$_id'
-			}
-		},
-		{
-			$project: {
-				_id: 0
-			}
-		},
-		{
-			$sort: {
-				numTravelsPerMonth: -1
-			}
-		},
-		{
-			$limit: 12
-		}
-	])
-	
-	res.status(200).json({
-		status: 'success',
-		data: {
-			monthlyAvg
-		}
-	});
+  const monthlyAvg = await Travel.aggregate([
+    {
+      $unwind: '$startDates'
+    },
+    {
+      $match: {
+	startDates: {
+	  $gte: new Date(`${year}-01-01`),
+	  $lte: new Date(`${year}-12-31`)
+	}
+      }
+    },
+    {
+      $group: {
+	_id: { $month: '$startDates' },
+	numTravelsPerMonth: { $sum: 1},
+	travels: { $push: '$name' }
+      }
+    },
+    {
+      $addFields: {
+        month: '$_id'
+      }
+    },
+    {
+      $project: {
+	_id: 0
+      }
+    },
+    {
+      $sort: {
+	numTravelsPerMonth: -1
+      }
+    },
+    {
+      $limit: 12
+    }
+  ])
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      monthlyAvg
+    }
+  });
 });
 
 //** Get a travel within a certain trajectory 
 exports.getTravelWithin = catchAsyncHandler(async (req, res, next) => {
-	const { distance, lnglat, unit } = req.params;
-	const [lat, lng] = lnglat.split(',');
+  const { distance, lnglat, unit } = req.params;
+  const [lat, lng] = lnglat.split(',');
 	if (!lng || !lat) {
-		return next(new ErrHandlingClass('latitude or longitude not provide', 400));
+	  return next(new ErrHandlingClass('latitude or longitude not provide', 400));
 	}
 
 	const radius = unit === 'km' ? distance / 6378.1 : distance / 3963.2;
-
-	const travels = await Travel.find({
-		startLocation: { $geoWithin: { $centerSphere: [ [lat, lng], radius ] } }
+  const travels = await Travel.find({
+    startLocation: { $geoWithin: { $centerSphere: [ [lat, lng], radius ] } }
 	});
 
 	res.status(200).json({
 		status: 'success',
 		result: travels.length,
 		data: travels
-	})
+	});
 });
 
 //** Get distance from your location
