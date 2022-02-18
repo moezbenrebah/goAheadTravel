@@ -15,11 +15,11 @@ export const login = async (email, password) => {
     });
 
     if (res.data.status === 'success') {
-			showAlert('success', 'Welcome back!');
-			window.setTimeout(() => {
-				location.assign('/');
-			}, 1500);
-		}
+      showAlert('success', 'Welcome back!');
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1500);
+    }
   } catch (error) {
     showAlert('error', error.response.data.message);
   }
@@ -33,13 +33,11 @@ export const logout = async () => {
     });
     if (res.data.status = 'success') {
       showAlert('success', 'See you soon!');
-      //location.reload(true);
-			window.setTimeout(() => {
-				location.assign('/');
-			}, 1000);
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1000);
     }
   } catch (error) {
-    // console.log(error.response);
     showAlert('error', error.response.data.message);
   }
 };
