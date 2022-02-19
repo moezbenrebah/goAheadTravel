@@ -8803,8 +8803,7 @@ function () {
             res = _context2.sent;
 
             if (res.data.status = 'success') {
-              (0, _alerts.showAlert)('success', 'See you soon!'); //location.reload(true);
-
+              (0, _alerts.showAlert)('success', 'See you soon!');
               window.setTimeout(function () {
                 location.assign('/');
               }, 1000);
@@ -8816,7 +8815,6 @@ function () {
           case 7:
             _context2.prev = 7;
             _context2.t0 = _context2["catch"](0);
-            // console.log(error.response);
             (0, _alerts.showAlert)('error', _context2.t0.response.data.message);
 
           case 10:
@@ -9307,7 +9305,6 @@ function () {
           case 11:
             _context.prev = 11;
             _context.t0 = _context["catch"](0);
-            // console.log(error);
             (0, _alerts.showAlert)('error', _context.t0);
 
           case 14:
@@ -9771,7 +9768,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38649" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46259" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
