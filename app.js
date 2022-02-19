@@ -12,6 +12,7 @@ const cors = require('cors');
 
 const ErrHandlingClass = require('./utilities/errorHandlingClass');
 const globalErrorHandler = require('./controllers/errorController');
+const bookingController = require('./controllers/bookingController');
 const travelRouter = require('./routes/travelRoutes');
 const userRouter = require('./routes/userRoutes');
 const ratingRouter = require('./routes/ratingRoutes');
@@ -71,6 +72,12 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again later!'
 });
 app.use('/api', limiter);
+
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: "*/*", limit: "50mb" }),
+  bookingController.webhookCheckout
+);
 
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
