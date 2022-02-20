@@ -83,7 +83,7 @@ const setupForStripeWebhooks = {
   verify: function (req, res, buf) {
     const url = req.originalUrl;
     if (url.startsWith('/webhook-checkout')) {
-      req.rawBody = buf.toString('utf8');
+      req.rawBody = buf.toString();
     }
   }
 };
