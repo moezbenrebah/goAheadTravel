@@ -76,7 +76,6 @@ app.use('/api', limiter);
 // In order to parse the req.body as a raw
 app.post(
   '/webhook-checkout',
-  express.raw({ type: "*/*", limit: "50mb" }),
   bookingController.webhookCheckout
 );
 

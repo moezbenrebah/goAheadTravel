@@ -74,7 +74,8 @@ exports.webhookCheckout = (req, res, next) => {
     // Handle the event
     switch (event.type) {
       case 'checkout.session.completed':
-        createBookingCheckout(event.data.object);
+        const session = event.data.object;
+        createBookingCheckout(session);
         // Then define and call a function to handle the event checkout.session.completed
         break;
       // ... handle other event types
