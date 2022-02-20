@@ -78,19 +78,19 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-const rawBodySaver =  (req, res, buf, encoding) =>{
-  if (buf && buf.length) {
-    req.rawBody = buf.toString(encoding || 'utf8');
+const setupForStripeWebhooks = {
+  // Because Stripe needs the raw body, we compute it but only when hitting the Stripe callback URL.
+  verify: function (req, res, buf) {
+    const url = req.originalUrl;
+    if (url.startsWith('/webhook-checkout')) {
+      req.rawBody = buf.toString();
+    }
   }
-}
-
-const options = {
-  verify: rawBodySaver
 };
 
 app.post(
   '/webhook-checkout',
-  express.raw(options),
+  express.raw(setupForStripeWebhooks),
   bookingController.webhookCheckout
 );
 
