@@ -73,12 +73,6 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-// In order to parse the req.body as a raw
-app.post(
-  '/webhook-checkout',
-  bookingController.webhookCheckout
-);
-
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
