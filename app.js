@@ -78,9 +78,19 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
+const rawBodySaver =  (req, res, buf, encoding) =>{
+  if (buf && buf.length) {
+    req.rawBody = buf.toString(encoding || 'utf8');
+  }
+}
+
+const options = {
+  verify: rawBodySaver
+};
+
 app.post(
   '/webhook-checkout',
-  express.raw({ type: "application/json" }),
+  express.raw(options),
   bookingController.webhookCheckout
 );
 
