@@ -82,8 +82,8 @@ const setupForStripeWebhooks = {
   // Because Stripe needs the raw body, we compute it but only when hitting the Stripe callback URL.
   verify: function (req, res, buf) {
     const url = req.originalUrl;
-    if (url.startsWith('/api/v1/webhook-checkout')) {
-      req.rawBody = buf.toString();
+    if (url.startsWith('/webhook-checkout')) {
+      req.rawBody = buf.toString('utf8');
     }
   }
 };
