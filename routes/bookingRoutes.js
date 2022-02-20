@@ -8,13 +8,8 @@ const router = express.Router();
 router.use(authController.grantAcess);
 
 // Get stripe checkout session
-router.get('/checkout-stripe/:travelId', authController.grantAcess, bookingController.getCheckoutStripe);
+router.get('/checkout-stripe/:travelId', bookingController.getCheckoutStripe);
 
-router.post(
-  '/webhook-checkout',
-  authController.grantAcess,
-  bookingController.webhookCheckout
-);
 
 router.use(authController.authorization('admin', 'lead-guide'));
 
