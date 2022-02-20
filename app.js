@@ -10,6 +10,11 @@ const cookieParser = require('cookie-parser');
 const compression = require('compression');
 const cors = require('cors');
 
+require ('dotenv').config();
+const Stripe = require('stripe');
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
 const ErrHandlingClass = require('./utilities/errorHandlingClass');
 const globalErrorHandler = require('./controllers/errorController');
 const bookingController = require('./controllers/bookingController');
@@ -75,8 +80,36 @@ app.use('/api', limiter);
 
 app.post(
   '/webhook-checkout',
-  express.raw({type: 'application/json'}),
-  bookingController.webhookCheckout
+  express.raw({ type: "*/*", limit: "50mb" }),
+  (req, res, next) => {
+    const sig = req.headers['stripe-signature'];
+
+    let event;
+
+    try {
+      event = stripe.webhooks.constructEvent(
+        req.body,
+        sig,
+        process.env.STRIPE_WEBHOOKS_SECRET
+      );
+    } catch (err) {
+      return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    // Handle the event
+    switch (event.type) {
+      case 'checkout.session.completed':
+        bookingController.createBookingCheckout(event.data.object);
+        // Then define and call a function to handle the event checkout.session.completed
+        break;
+      // ... handle other event types
+      default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
+
+    // Return a 200 response to acknowledge receipt of the event
+    res.status(200).json({ received: true });
+  }
 );
 
 // Body parser, reading data from body into req.body
