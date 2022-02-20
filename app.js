@@ -63,30 +63,12 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // ENHANCE APPLICATION SECURITY - Set security HTTP headers
-// app.use(
-//   helmet({
-//     contentSecurityPolicy: false,
-//     crossOriginEmbedderPolicy: false // fix sameorigin cors issue in order to render stripe checkout session 
-//   })
-// );
-
-app.use(helmet());
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Origin, Authorization'
-  );
-  res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-  res.header('Allow', 'GET, PATCH, PUT, DELETE, OPTIONS');
-
-  if (req.accepts('json' || 'xml' || 'x-www-form-urlencoded')) {
-    next();
-  } else {
-    res.sendStatus(406);
-  }
-});
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false // fix sameorigin cors issue in order to render stripe checkout session 
+  })
+);
 
 // ENHANCE APPLICATION SECURITY - Limit requests from same API
 const limiter = rateLimit({
