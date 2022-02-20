@@ -63,12 +63,30 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // ENHANCE APPLICATION SECURITY - Set security HTTP headers
-app.use(
-  helmet({
-    contentSecurityPolicy: false,
-    crossOriginEmbedderPolicy: false // fix sameorigin cors issue in order to render stripe checkout session 
-  })
-);
+// app.use(
+//   helmet({
+//     contentSecurityPolicy: false,
+//     crossOriginEmbedderPolicy: false // fix sameorigin cors issue in order to render stripe checkout session 
+//   })
+// );
+
+app.use(helmet());
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Origin, Authorization'
+  );
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+  res.header('Allow', 'GET, PATCH, PUT, DELETE, OPTIONS');
+
+  if (req.accepts('json' || 'xml' || 'x-www-form-urlencoded')) {
+    next();
+  } else {
+    res.sendStatus(406);
+  }
+});
 
 // ENHANCE APPLICATION SECURITY - Limit requests from same API
 const limiter = rateLimit({
@@ -81,35 +99,7 @@ app.use('/api', limiter);
 app.post(
   '/webhook-checkout',
   express.raw({ type: "*/*", limit: "50mb" }),
-  (req, res, next) => {
-    const sig = req.headers['stripe-signature'];
-
-    let event;
-
-    try {
-      event = stripe.webhooks.constructEvent(
-        req.body,
-        sig,
-        process.env.STRIPE_WEBHOOKS_SECRET
-      );
-    } catch (err) {
-      return res.status(400).send(`Webhook Error: ${err.message}`);
-    }
-
-    // Handle the event
-    switch (event.type) {
-      case 'checkout.session.completed':
-        bookingController.createBookingCheckout(event.data.object);
-        // Then define and call a function to handle the event checkout.session.completed
-        break;
-      // ... handle other event types
-      default:
-        console.log(`Unhandled event type ${event.type}`);
-    }
-
-    // Return a 200 response to acknowledge receipt of the event
-    res.status(200).json({ received: true });
-  }
+  bookingController.webhookCheckout
 );
 
 // Body parser, reading data from body into req.body
