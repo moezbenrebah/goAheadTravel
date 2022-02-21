@@ -78,19 +78,19 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-const setupForStripeWebhooks = {
-  // Because Stripe needs the raw body, we compute it but only when hitting the Stripe callback URL.
-  verify: function (req, res, buf) {
-    const url = req.originalUrl;
-    if (url.startsWith('/stripe-webhook')) {
-      req.rawBody = buf.toString();
-    }
-  }
-};
+// const setupForStripeWebhooks = {
+//   // Because Stripe needs the raw body, we compute it but only when hitting the Stripe callback URL.
+//   verify: function (req, res, buf) {
+//     const url = req.originalUrl;
+//     if (url.startsWith('/stripe-webhook')) {
+//       req.rawBody = buf.toString();
+//     }
+//   }
+// };
 
 app.post(
   '/stripe-webhook',
-  express.raw(setupForStripeWebhooks),
+  express.raw({type: 'application/json'}),
   bookingController.webhookCheckout
 );
 

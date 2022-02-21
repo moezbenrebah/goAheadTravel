@@ -49,7 +49,6 @@ const createBookingCheckout = async session => {
   const travel = session.client_reference_id;
   const user = (await User.findOne({ email: session.customer_email })).id;
   const price = session.line_items[0].amount / 100;
-  console.log(travel, user, price);
   await Booking.create({ travel, user, price });
 }
 
@@ -62,7 +61,7 @@ exports.webhookCheckout = (req, res, next) => {
     event = stripe.webhooks.constructEvent(
       req.body,
       sig,
-      'whsec_LRE4tfFgNlD9TvWpFwFXFFyDhlxUTAeC'
+      process.env.STRIPE_WEBHOOKS_SECRET
     );
   } catch (err) {
     return res.status(400).send(`Webhook Error: ${err.message}`);
