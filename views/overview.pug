@@ -43,17 +43,3 @@ block content
                 | 
                 span.card__footer-text= `rating (${travel.ratingsQuantity})`
               a.btn.btn--green.btn--small(href=`/travel/${travel.slug}`) Details
-      else
-        .error
-          .error__title
-            h2.heading-secondary.heading-secondary--error It seems that you doesn't book a travel yet!
-            //-img.error__title-img(src=`/img/Scarecrow.png` alt='Someting went wrong')
-          table.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')
-            tbody
-              tr
-                td(align='left')
-                  table(role='presentation', border='0', cellpadding='0', cellspacing='0')
-                    tbody
-                      tr
-                        td
-                          a(href="/overview") Get more details here
