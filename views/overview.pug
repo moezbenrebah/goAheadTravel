@@ -3,43 +3,57 @@ extends goaheadtravel
 block content
   main.main
     .card-container
-    
-      each travel in travels
-        .card
-          .card__header
-            .card__picture
-              .card__picture-overlay &nbsp;
-              img.card__picture-img(src=`/img/travels/${travel.imageCover}`, alt=`${travel.name}`)
-            h3.heading-tertirary
-              span= travel.name
+      if travel
+        each travel in travels
+          .card
+            .card__header
+              .card__picture
+                .card__picture-overlay &nbsp;
+                img.card__picture-img(src=`/img/travels/${travel.imageCover}`, alt=`${travel.name}`)
+              h3.heading-tertirary
+                span= travel.name
 
-          .card__details
-            h4.card__sub-heading= `${travel.difficulty} ${travel.duration}-day travel`
-            p.card__text= travel.summary
-            .card__data
-              svg.card__icon
-                use(xlink:href='/img/icons.svg#icon-map-pin')
-              span= travel.startLocation.description
-            .card__data
-              svg.card__icon
-                use(xlink:href='/img/icons.svg#icon-calendar')
-              span= travel.startDates[0].toLocaleString('en-us', {month: 'long', year: 'numeric', timeZone: 'UTC'})
-            .card__data
-              svg.card__icon
-                use(xlink:href='/img/icons.svg#icon-flag')
-              span= `${travel.locations.length} stops`
-            .card__data
-              svg.card__icon
-                use(xlink:href='/img/icons.svg#icon-user')
-              span= `${travel.maxGroupSize} people`
+            .card__details
+              h4.card__sub-heading= `${travel.difficulty} ${travel.duration}-day travel`
+              p.card__text= travel.summary
+              .card__data
+                svg.card__icon
+                  use(xlink:href='/img/icons.svg#icon-map-pin')
+                span= travel.startLocation.description
+              .card__data
+                svg.card__icon
+                  use(xlink:href='/img/icons.svg#icon-calendar')
+                span= travel.startDates[0].toLocaleString('en-us', {month: 'long', year: 'numeric', timeZone: 'UTC'})
+              .card__data
+                svg.card__icon
+                  use(xlink:href='/img/icons.svg#icon-flag')
+                span= `${travel.locations.length} stops`
+              .card__data
+                svg.card__icon
+                  use(xlink:href='/img/icons.svg#icon-user')
+                span= `${travel.maxGroupSize} people`
 
-          .card__footer
-            p
-              span.card__footer-value= `$${travel.price}`
-              | 
-              span.card__footer-text per person
-            p.card__ratings
-              span.card__footer-value= travel.ratingsAverage
-              | 
-              span.card__footer-text= `rating (${travel.ratingsQuantity})`
-            a.btn.btn--green.btn--small(href=`/travel/${travel.slug}`) Details
+            .card__footer
+              p
+                span.card__footer-value= `$${travel.price}`
+                | 
+                span.card__footer-text per person
+              p.card__ratings
+                span.card__footer-value= travel.ratingsAverage
+                | 
+                span.card__footer-text= `rating (${travel.ratingsQuantity})`
+              a.btn.btn--green.btn--small(href=`/travel/${travel.slug}`) Details
+      else
+        .error
+          .error__title
+            h2.heading-secondary.heading-secondary--error It seems that you doesn't book a travel yet!
+            //-img.error__title-img(src=`/img/Scarecrow.png` alt='Someting went wrong')
+          table.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')
+            tbody
+              tr
+                td(align='left')
+                  table(role='presentation', border='0', cellpadding='0', cellspacing='0')
+                    tbody
+                      tr
+                        td
+                          a(href="/") Get more details here

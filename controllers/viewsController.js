@@ -104,7 +104,6 @@ exports.myBookedTravels = catchAsyncHandler( async(req, res, next) => {
   // find all travels that includes the above id (bookedTravels)
   const travelsIds = bookedTravels.map(item => item.travel);
   const travels = await Travel.find({ _id: { $in: travelsIds } });
-  console.log(travels.length);
 
   // Render the page that contains the booked travels
   res.status(200).render('overview', {
