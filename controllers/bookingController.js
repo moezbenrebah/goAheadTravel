@@ -45,14 +45,22 @@ exports.getCheckoutStripe = catchAsyncHandler( async(req, res, next) => {
 
 // ********************
 
-const createBookingCheckout = async session => {
+const sessionLineItems = async (event) => {
+  const li = await stripe.checkout.sessions.retrieve(event.data.object.id, {
+      expand: ['line_items']
+  });
+  const lineItemDataObj = li.line_items.data[0];
+  return lineItemDataObj;
+};
+
+const createBookingCheckout = async (session, sli) => {
   const travel = session.client_reference_id;
   const user = (await User.findOne({ email: session.customer_email })).id;
-  const price = session.line_items[0].amount / 100;
+  const price = parseInt(sli.amount_total / 100, 10);
   await Booking.create({ travel, user, price });
 }
 
-exports.webhookCheckout = (req, res, next) => {
+exports.webhookCheckout = async (req, res, next) => {
   const sig = req.headers['stripe-signature'];
 
   let event;
@@ -68,8 +76,10 @@ exports.webhookCheckout = (req, res, next) => {
   }
 
   // Handle the event
-  if (event.type === 'checkout.session.completed') createBookingCheckout(event.data.object);
-
+  if (event.type === 'checkout.session.completed') {
+    const sli = await sessionLineItems(event);
+    createBookingCheckout(event.data.object, sli);
+  }
   // Return a 200 response to acknowledge receipt of the event
   res.status(200).json({ received: true });
 };

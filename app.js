@@ -10,11 +10,6 @@ const cookieParser = require('cookie-parser');
 const compression = require('compression');
 const cors = require('cors');
 
-require ('dotenv').config();
-const Stripe = require('stripe');
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
 const ErrHandlingClass = require('./utilities/errorHandlingClass');
 const globalErrorHandler = require('./controllers/errorController');
 const bookingController = require('./controllers/bookingController');
@@ -78,15 +73,6 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-// const setupForStripeWebhooks = {
-//   // Because Stripe needs the raw body, we compute it but only when hitting the Stripe callback URL.
-//   verify: function (req, res, buf) {
-//     const url = req.originalUrl;
-//     if (url.startsWith('/stripe-webhook')) {
-//       req.rawBody = buf.toString();
-//     }
-//   }
-// };
 
 app.post(
   '/stripe-webhook',
