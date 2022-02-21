@@ -6,6 +6,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const Travel = require('../models/travelModel');
 const Booking = require('../models/bookingModel');
 const User = require('../models/userModel');
+const Email = require('../utilities/nodemail');
 const catchAsyncHandler = require('../utilities/catchAsyncHandler');
 const factoryHandler = require("./factoryHandler");
 
@@ -79,6 +80,7 @@ exports.webhookCheckout = async (req, res, next) => {
   // Create a new booking whenever a successful payment occurs
   if (event.type === 'checkout.session.completed') {
     const linkedData = await sessionLineItems(event);
+    await new Email(linkedData.customer_email, linkedData.success_url).sendPasswordReset();
     createBookingCheckout(event.data.object, linkedData);
   }
   // Return a 200 response to acknowledge receipt of the event
