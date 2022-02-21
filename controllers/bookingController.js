@@ -80,7 +80,7 @@ exports.webhookCheckout = async (req, res, next) => {
   // Create a new booking whenever a successful payment occurs
   if (event.type === 'checkout.session.completed') {
     const linkedData = await sessionLineItems(event);
-    await new Email(linkedData.customer_email, linkedData.success_url).sendPasswordReset();
+    await new Email(linkedData.customer_email, linkedData.success_url).sendBookedTravel();
     createBookingCheckout(event.data.object, linkedData);
   }
   // Return a 200 response to acknowledge receipt of the event
