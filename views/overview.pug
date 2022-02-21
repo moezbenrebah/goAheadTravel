@@ -2,8 +2,8 @@ extends goaheadtravel
 
 block content
   main.main
-    .card-container
-      if travel
+    if travel
+      .card-container
         each travel in travels
           .card
             .card__header
