@@ -6,6 +6,7 @@ import { updateSettings } from './updateSettings';
 import { forgotPassword } from './forgotpassword';
 import { resetPassword } from './resetpassword'
 import { BookTravel } from './stripe';
+import { showAlert } from './alerts'
 
 
 const loginForm = document.querySelector('.form--login');
@@ -100,6 +101,7 @@ if (updatePasswordForm) {
   });
 }
 
+// retrieve the travel whenever a booking button hited
 if (bookBtn) {
   bookBtn.addEventListener('click', e => {
     e.target.textContent = 'Processing ...';
@@ -107,4 +109,7 @@ if (bookBtn) {
     BookTravel(travelId);
   })
 }
-  
+
+// show alerts views templates
+const alertMessage = document.querySelector('body').dataset.alert;
+if (alertMessage) showAlert('success', alertMessage);

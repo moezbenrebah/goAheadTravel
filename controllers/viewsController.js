@@ -4,6 +4,16 @@ const Booking = require('../models/bookingModel');
 const catchAsyncHandler = require('../utilities/catchAsyncHandler');
 const ErrHandlingClass = require('../utilities/errorHandlingClass');
 
+// set middleware to enable the alert messages in HTML pages whenever a event occurs
+exports.alerts = (req, res, next) => {
+  const { alert } = req.query;
+  if (alert === 'booking') {
+    res.locals.alert =
+      "Your booking was successful! Please check your email for a confirmation. If your booking doesn't show up here immediatly, please come back later.";
+  }
+  next();
+};
+
 //** get the the overview page
 exports.getTravelOverview = catchAsyncHandler(async (req, res, next) => {
   const travels = await Travel.find();

@@ -18,7 +18,7 @@ exports.getCheckoutStripe = catchAsyncHandler( async(req, res, next) => {
 		// Information about the checkout session
     payment_method_types: ['card'],
     //success_url: `${req.protocol}://${req.get('host')}/?travel=${req.params.travelId}&user=${req.user.id}&price=${travel.price}`
-    success_url: `${req.protocol}://${req.get('host')}/my-booked-travels`,
+    success_url: `${req.protocol}://${req.get('host')}/my-booked-travels?alert=booking`,
     cancel_url: `${req.protocol}://${req.get('host')}/travel/${travel.slug}`,
     customer_email: req.user.email,
     client_reference_id: req.params.travelId,
@@ -43,23 +43,24 @@ exports.getCheckoutStripe = catchAsyncHandler( async(req, res, next) => {
   });
 });
 
-// ********************
-
+// expand line_items in order to retrieve its data from the event (completed checkout session)
 const sessionLineItems = async (event) => {
-  const li = await stripe.checkout.sessions.retrieve(event.data.object.id, {
+  const expandedProp = await stripe.checkout.sessions.retrieve(event.data.object.id, {
       expand: ['line_items']
   });
-  const lineItemDataObj = li.line_items.data[0];
+  const lineItemDataObj = expandedProp.line_items.data[0];
   return lineItemDataObj;
 };
 
-const createBookingCheckout = async (session, sli) => {
+// Handle booking based on stripe event
+const createBookingCheckout = async (session, linkedData) => {
   const travel = session.client_reference_id;
   const user = (await User.findOne({ email: session.customer_email })).id;
-  const price = parseInt(sli.amount_total / 100, 10);
+  const price = parseInt(linkedData.amount_total / 100, 10);
   await Booking.create({ travel, user, price });
 }
 
+// Stripe webhook handler
 exports.webhookCheckout = async (req, res, next) => {
   const sig = req.headers['stripe-signature'];
 
@@ -75,26 +76,14 @@ exports.webhookCheckout = async (req, res, next) => {
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  // Handle the event
+  // Create a new booking whenever a successful payment occurs
   if (event.type === 'checkout.session.completed') {
-    const sli = await sessionLineItems(event);
-    createBookingCheckout(event.data.object, sli);
+    const linkedData = await sessionLineItems(event);
+    createBookingCheckout(event.data.object, linkedData);
   }
   // Return a 200 response to acknowledge receipt of the event
   res.status(200).json({ received: true });
 };
-
-// ********************
-
-// create booking based on successful stripe checkout session
-// exports.bookingBasedSuccessSession = catchAsyncHandler( async(req, res, next) => {
-//   const { travel, user, price } = req.query;
-
-//   if (!travel && !user && !price) return next();
-
-//   await Booking.create({ travel, user, price });
-//   res.redirect(req.originalUrl.split('?')[0]);
-// });
 
 // get all booked travels
 exports.getAllBookings = catchAsyncHandler(async (req, res, next) => {
