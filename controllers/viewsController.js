@@ -104,7 +104,7 @@ exports.myBookedTravels = catchAsyncHandler( async(req, res, next) => {
   // find all travels that includes the above id (bookedTravels)
   const travelsIds = bookedTravels.map(item => item.travel);
   const travels = await Travel.find({ _id: { $in: travelsIds } });
-  if (travels.length === 0) {
+  if (!travels) {
     res.status(404).render('nobooking');
   }
 
