@@ -110,8 +110,12 @@ exports.myBookedTravels = catchAsyncHandler( async(req, res, next) => {
   const travels = await Travel.find({ _id: { $in: travelsIds } });
 
   // Render the page that contains the booked travels
-  res.status(200).render('overview', {
-    title: 'My travels',
-    travels
-  });
+  if (!travels) {
+    res.status(404).render('nobooking')
+  } else {
+    res.status(200).render('overview', {
+      title: 'My travels',
+      travels
+    });
+  }
 });
