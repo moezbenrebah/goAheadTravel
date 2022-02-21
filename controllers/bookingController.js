@@ -80,8 +80,8 @@ exports.webhookCheckout = async (req, res, next) => {
   // Create a new booking whenever a successful payment occurs
   if (event.type === 'checkout.session.completed') {
     const linkedData = await sessionLineItems(event);
-    await new Email(linkedData.customer_email, linkedData.success_url).sendBookedTravel();
     createBookingCheckout(event.data.object, linkedData);
+    await new Email('1406@holbertonschool.com', `${req.protocol}://${req.get('host')}/my-booked-travels`).sendBookedTravel();
   }
   // Return a 200 response to acknowledge receipt of the event
   res.status(200).json({ received: true });
