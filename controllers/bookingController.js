@@ -59,7 +59,7 @@ const createBookingCheckout = async (session, linkedData) => {
   const user = (await User.findOne({ email: session.customer_email })).id;
   const userEmail = (await User.findOne({ email: session.customer_email }));
   const price = parseInt(linkedData.amount_total / 100, 10);
-  const url = session.success_url.originalUrl.split('?')[0]
+  const url = session.success_url.split('?')[0]
   await Booking.create({ travel, user, price });
   await new Email(userEmail, url).sendBookedTravel();
 }
