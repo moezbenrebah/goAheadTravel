@@ -2,9 +2,9 @@ extends goaheadtravel
 
 block content
   main.main
-    if travel
-      .card-container
-        each travel in travels
+    .card-container
+      each travel in travels
+        if travel
           .card
             .card__header
               .card__picture
@@ -43,3 +43,5 @@ block content
                 | 
                 span.card__footer-text= `rating (${travel.ratingsQuantity})`
               a.btn.btn--green.btn--small(href=`/travel/${travel.slug}`) Details
+        else
+          p There is no travel booked yet!
