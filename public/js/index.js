@@ -55,6 +55,7 @@ if (forgotPasswordForm) {
 
     // clear email field
     document.querySelector('input#email').value = '';
+    document.getElementById('reset-btn').textContent = 'RESET MY PASSWORD';
   });
 };
 

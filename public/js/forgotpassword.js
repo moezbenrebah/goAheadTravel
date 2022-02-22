@@ -20,8 +20,5 @@ export const forgotPassword = async (email) => {
     }
   } catch (error) {
     showAlert('error', error.response.data.message);
-    window.setTimeout(() => {
-      location.assign('/forgotpassword');
-    }, 500);
   }
 };
