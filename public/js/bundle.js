@@ -9016,6 +9016,10 @@ function () {
               window.setTimeout(function () {
                 location.assign('/forgotpassword');
               }, 500);
+            } else {
+              window.setTimeout(function () {
+                location.assign('/forgotpassword');
+              }, 500);
             }
 
             _context.next = 10;
@@ -9638,7 +9642,6 @@ if (forgotPasswordForm) {
     (0, _forgotpassword.forgotPassword)(email); // clear email field
 
     document.querySelector('input#email').value = '';
-    document.getElementById('reset-btn').textContent = 'RESET MY PASSWORD';
   });
 }
 
@@ -9776,7 +9779,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40771" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35773" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

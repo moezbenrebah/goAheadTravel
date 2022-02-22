@@ -17,6 +17,10 @@ export const forgotPassword = async (email) => {
       window.setTimeout(() => {
 	      location.assign('/forgotpassword');
       }, 500);
+    } else {
+      window.setTimeout(() => {
+	      location.assign('/forgotpassword');
+      }, 500);
     }
   } catch (error) {
     showAlert('error', error.response.data.message);
