@@ -43,7 +43,8 @@ exports.signUp = catchAsyncHandler(async (req, res, next) => {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
-    passwordValidation: req.body.passwordValidation
+    passwordValidation: req.body.passwordValidation,
+    photo: req.body.imagefile
   });
 
   const url = `${req.protocol}://${req.get('host')}/me`;
