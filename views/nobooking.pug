@@ -2,12 +2,9 @@ extends goaheadtravel
 
 block content
 	main.main
-		.error
-			.error__title
-				h2.heading-secondary.heading-secondary--error It seems that you doesn't book a travel yet!
-				h2.error__emoji 😢 🤯
-				//-img.error__title-img(src=`/img/Scarecrow.png` alt='Someting went wrong')
-			table.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')
+		.content
+			h2.heading-secondary.ma-bt-md If You Haven’t Booked Holiday Travel Yet, then let's book now!
+			table.nobooking-btn.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')
 				tbody
 					tr
 						td(align='left')
@@ -15,4 +12,4 @@ block content
 								tbody
 									tr
 										td
-											a(href="/") Get more details here
+											a(href="/") Your next memories is here

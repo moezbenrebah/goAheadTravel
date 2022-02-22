@@ -60,6 +60,25 @@ body {
   display: flex;
 }
 
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  margin: 5rem auto;
+}
+
+.nobooking-btn a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bolder;
+}
+
+.nobooking-btn.btn {
+  background-color: #d16ba5;
+  margin-top: 10rem;
+}
+
 .span-all-rows {
   grid-row: 1 / -1;
 }
