@@ -15,10 +15,13 @@ export const forgotPassword = async (email) => {
     if (res.data.status === 'success') {
       showAlert('success', 'Please check you email box');
       window.setTimeout(() => {
-	location.assign('/forgotpassword');
+	      location.assign('/forgotpassword');
       }, 500);
     }
   } catch (error) {
     showAlert('error', error.response.data.message);
+    window.setTimeout(() => {
+      location.assign('/forgotpassword');
+    }, 500);
   }
 };

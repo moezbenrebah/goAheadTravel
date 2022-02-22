@@ -62,7 +62,7 @@ exports.myAccount = (req, res) => {
 };
 
 //** get the forgot password page
-exports.forgotPassword = (req, res) => {
+exports.forgotPassword = async (req, res) => {
   res.status(200).render('forgotPassword', {
     title: 'forgotpassword'
   });
