@@ -118,12 +118,7 @@ exports.deleteUserAccount = catchAsyncHandler( async(req, res, next) => {
 exports.getUser = factoryHandler.getOnce(User);
 
 //** Add user
-exports.addUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'Please sign up'
-  });
-};
+exports.addUser = factoryHandler.addOnce(User);
 
 //** Update user data "findByIdAndUpdate()" for admin privileges
 exports.updateUser = factoryHandler.updateOnce(User)
