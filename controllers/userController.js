@@ -78,7 +78,7 @@ exports.updateMyData = catchAsyncHandler( async(req, res, next) => {
     return next(new ErrHandlingClass('Please use the appropriate link to update your password', 400))
   }
 
-  // filter data allowed to be updated by the user
+  // filter data allowed to be updated by user
   const allowedBodyData = updatedData(req.body, 'name', 'email', 'role');
 
   // Handle the case if the user didn't upload a profile image
