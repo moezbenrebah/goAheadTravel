@@ -18,7 +18,6 @@ exports.getCheckoutStripe = catchAsyncHandler( async(req, res, next) => {
   const session = await stripe.checkout.sessions.create({
 		// Information about the checkout session
     payment_method_types: ['card'],
-    //success_url: `${req.protocol}://${req.get('host')}/?travel=${req.params.travelId}&user=${req.user.id}&price=${travel.price}`
     success_url: `${req.protocol}://${req.get('host')}/my-booked-travels?alert=booking`,
     cancel_url: `${req.protocol}://${req.get('host')}/travel/${travel.slug}`,
     customer_email: req.user.email,
@@ -53,11 +52,11 @@ const sessionLineItems = async (event) => {
   return lineItemDataObj;
 };
 
-// Handle booking based on stripe event
+// Handle booking creation data
 const createBookingCheckout = async (session, linkedData) => {
   const travel = session.client_reference_id;
   const user = (await User.findOne({ email: session.customer_email })).id;
-  const userEmail = (await User.findOne({ email: session.customer_email }));
+  const userEmail = await User.findOne({ email: session.customer_email });
   const price = parseInt(linkedData.amount_total / 100, 10);
   const url = session.success_url.split('?')[0]
   await Booking.create({ travel, user, price });
@@ -80,7 +79,7 @@ exports.webhookCheckout = async (req, res, next) => {
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  // Create a new booking whenever a successful payment occurs
+  // Create a new booking whenever a successful payment event occurs
   if (event.type === 'checkout.session.completed') {
     const linkedData = await sessionLineItems(event);
     createBookingCheckout(event.data.object, linkedData);

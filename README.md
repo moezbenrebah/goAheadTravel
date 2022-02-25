@@ -4,15 +4,18 @@
 
 ## **Content Overview:**
 
-- [The project main idea](#the)
-- [Demo](#demo)
-- [Architecture](#architecture)
-- [APIs](#apis)
-- [Error handling](#Error)
-- [Data Modeling](#Data)
-- [Technologies & Third services](#technologies)
-- [coming improvement](#coming)
-- [LICENSE](#license)
+- [***Go Ahead Travel***](#go-ahead-travel)
+  - [**Content Overview:**](#content-overview)
+    - [**The project main idea:**](#the-project-main-idea)
+    - [**Demo:** (click to redirect to youtube demo video)](#demo-click-to-redirect-to-youtube-demo-video)
+    - [**Postman APIs:**](#postman-apis)
+    - [**Architecture:**](#architecture)
+    - [**Error handling:**](#error-handling)
+    - [**Data Modeling:**](#data-modeling)
+    - [**Stripe Implementation & Stripe webhooks logic:**](#stripe-implementation--stripe-webhooks-logic)
+    - [**Technologies & Third services:**](#technologies--third-services)
+    - [**coming improvement:**](#coming-improvement)
+    - [**LICENSE:**](#license)
 
 <br><br>
 
@@ -24,11 +27,11 @@ The project is a travel booking web application, where users can purchase travel
 ### **Demo:** (click to redirect to youtube demo video)
 <br>
 
-[![](https://img.youtube.com/vi/eAUnlVjOXFw/0.jpg)](https://www.youtube.com/watch?v=eAUnlVjOXFw)
+[![](https://img.youtube.com/vi/-9r9shBcI8k/0.jpg)](https://www.youtube.com/watch?v=-9r9shBcI8k)
 
 <br><br>
 
-### **APIs:**
+### **Postman APIs:**
 
 Please refer to this <a href="https://documenter.getpostman.com/view/14950888/UVeFNS9W#da0f790e-0ffb-471b-891c-006a08e07150" target="_blank">link</a> to get more details about APIs.
 
@@ -40,6 +43,7 @@ Please refer to this <a href="https://documenter.getpostman.com/view/14950888/UV
 
 **Project Directory structure:**
 ```
+goAheadTravel/
 ├── app.js
 ├── controllers
 │   ├── authController.js
@@ -53,6 +57,10 @@ Please refer to this <a href="https://documenter.getpostman.com/view/14950888/UV
 ├── dev-data
 │   └── data
 │       ├── import-data.js
+│       ├── ratings.json
+│       ├── travels.json
+│       └── users.json
+├── LICENSE
 ├── models
 │   ├── bookingModel.js
 │   ├── ratingModel.js
@@ -76,6 +84,7 @@ Please refer to this <a href="https://documenter.getpostman.com/view/14950888/UV
 │       ├── signup.js
 │       ├── stripe.js
 │       └── updateSettings.js
+├── README.md
 ├── routes
 │   ├── bookingRoutes.js
 │   ├── ratingRoutes.js
@@ -89,18 +98,20 @@ Please refer to this <a href="https://documenter.getpostman.com/view/14950888/UV
 │   ├── errorHandlingClass.js
 │   └── nodemail.js
 └── views
-    ├── content.pug
     ├── emailTemplates
+    │   ├── bookedTravel.pug
     │   ├── emailStyle.pug
     │   ├── goAheadTravelEmail.pug
     │   ├── passwordReset.pug
     │   └── welcome.pug
     ├── Error.pug
+    ├── content.pug
     ├── footer.pug
     ├── forgotPassword.pug
     ├── goaheadtravel.pug
     ├── header.pug
     ├── login.pug
+    ├── nobooking.pug
     ├── overview.pug
     ├── profile.pug
     ├── resetPassword.pug
@@ -113,7 +124,7 @@ Please refer to this <a href="https://documenter.getpostman.com/view/14950888/UV
 
 **Application architecture:**
 
-This project builds with NodeJs, MongoDB, JavaScript, CSS, and PUG.
+This project builds with NodeJs, MongoDB JavaScript, CSS, PUG and MongoDB.
 
 <br>
 
@@ -173,6 +184,23 @@ represnting to clients and is the layer that the hole application build around.
 
 <br><br>
 
+### **Stripe Implementation & Stripe webhooks logic:**
+
+<br>
+
+- **Backend-side:** I set a route to create Stripe checkout session, which will contain informations about the travel to purchase like the name of the travel, the price, the currency,.. etc, along with user details such as the email, name. For that, the stripe secret key must be provided.
+
+- **Frontend-side:** I implemented a function that will call the Stripe checkout session from the server once the user hit the booking button and send it back to client and based on that session Stripe will create the checkout page and redirect the user to it, in order to fill it with the card number, expiration date,.. Then, Stripe will charge the credit card which means that the user data (credit card number, expiration date...) will not reach the web application server and this is very secure. 
+
+- **Stripe Webhook:** Once the travel booking event is successful, I impelemented a function that retrieve data from the event object to create a new booking in the DB and send a confirmation email to user.
+
+
+<br>
+
+![](https://i.imgur.com/hQDT8E1.png)
+
+<br><br>
+
 ### **Technologies & Third services:**
 
 <br>
@@ -180,10 +208,10 @@ represnting to clients and is the layer that the hole application build around.
 - Postman
 - MongoDB Atlas
 - Parcel-bundler
-- Strip
+- Stripe
 - Mailtrap
 - Mapbox
-- Mailgun
+- Gmail (to send emails)
 
 <br><br>
 
@@ -191,7 +219,7 @@ represnting to clients and is the layer that the hole application build around.
 
 <br>
 
-- Impelement map along with locations to visit
+- Impelement map along with locations to visit using **Mapbox**
 - improve users + admin&lead-guide profile dashbord (booked travels, list of all users, travels, list of users ratings ...)
 - Improve the web application responsiveness and design
 
