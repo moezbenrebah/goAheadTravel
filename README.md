@@ -7,7 +7,7 @@
 - [***Go Ahead Travel***](#go-ahead-travel)
   - [**Content Overview:**](#content-overview)
     - [**The project main idea:**](#the-project-main-idea)
-    - [**Demo:** (click to redirect to youtube demo video)](#demo-click-to-redirect-to-youtube-demo-video)
+    - [**Demo:**](#demo)
     - [**Postman APIs:**](#postman-apis)
     - [**Architecture:**](#architecture)
     - [**Error handling:**](#error-handling)
