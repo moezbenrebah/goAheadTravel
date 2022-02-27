@@ -141,7 +141,7 @@ This project builds with NodeJs, MongoDB JavaScript, CSS, PUG and MongoDB.
 - <ins>cryptojs:</ins> for encrypt password and token
 - <ins>JSON Web Token (JWT):</ins> for authenticate users
 - <ins>Stripe:</ins> for online payments via bank card
-- <ins>Mailgun:</ins> for emailing users whenver they signed up or attempt to update their passwords
+- <ins>Gmail:</ins> for emailing users whenver they signed up, attempt to update their passwords, or booked a travel
 
 <br>
 
