@@ -7,7 +7,7 @@
 - [***Go Ahead Travel***](#go-ahead-travel)
   - [**Content Overview:**](#content-overview)
     - [**The project main idea:**](#the-project-main-idea)
-    - [**Demo:**](#demo)
+    - [**Demo:** (click to redirect to youtube demo video)](#demo-click-to-redirect-to-youtube-demo-video)
     - [**Postman APIs:**](#postman-apis)
     - [**Architecture:**](#architecture)
     - [**Error handling:**](#error-handling)
@@ -137,11 +137,13 @@ This project builds with NodeJs, MongoDB JavaScript, CSS, PUG and MongoDB.
 - <ins>ExpressJs:</ins> for design Rest APIs, define middlewares, manage routings, HTTP request, error handling ...
 - <ins>Mongoose:</ins> for data modeling, schema building, document middleware, and business logic
 - <ins>MongoDB Atlas:</ins> for database hosting
-- <ins>Nodemailer:</ins> for sending emails to user (example: reset password)
+- <ins>Nodemailer:</ins> Node module for sending emails to users (example: reset password)
 - <ins>cryptojs:</ins> for encrypt password and token
 - <ins>JSON Web Token (JWT):</ins> for authenticate users
 - <ins>Stripe:</ins> for online payments via bank card
-- <ins>Gmail:</ins> for emailing users whenver they signed up, attempt to update their passwords, or booked a travel
+- <ins>Gmail:</ins> SMTP service provider for emailing users whenever they signed up, attempt to update their passwords, or booked a travel
+- <ins>Multer:</ins> for uploading images
+- <ins>Sharp:</ins> for converting large images to web friendly jpeg and resizing images
 
 <br>
 
