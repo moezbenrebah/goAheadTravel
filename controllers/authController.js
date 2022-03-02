@@ -39,12 +39,12 @@ const genResJWT = (user, statusCode, req, res) => {
 
 //** Sign up users & send to users the welcome email
 exports.signUp = catchAsyncHandler(async (req, res, next) => {
+  
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
-    passwordValidation: req.body.passwordValidation,
-    photo: req.body.imagefile
+    passwordValidation: req.body.passwordValidation
   });
 
   const url = `${req.protocol}://${req.get('host')}/me`;
