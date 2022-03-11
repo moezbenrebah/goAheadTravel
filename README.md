@@ -20,7 +20,9 @@
 <br><br>
 
 ### **The project main idea:**
-The project is a travel booking web application, where users can purchase travel via bank card, create an account, log in and log out, with the ability to reset their password and update their data (name, photo, and email basically) along with an improved user experience.
+Go Ahead Travel is a booking full-stack web application, where users can purchase travel via bank card, create an account, log in and log out,
+with the ability to reset their password and update their data (name, photo, and email basically), with an improved user experience. An emailing feature 
+is provided each time a user signup, attempts to reset the password, or purchases travel.
 
 <br>
 
