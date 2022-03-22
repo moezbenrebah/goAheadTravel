@@ -12,6 +12,7 @@
     - [**Architecture:**](#architecture)
     - [**Error handling:**](#error-handling)
     - [**Data Modeling:**](#data-modeling)
+    - [**Security Features Implemented:**](#security-features-implemented)
     - [**Stripe Implementation & Stripe webhooks logic:**](#stripe-implementation--stripe-webhooks-logic)
     - [**Technologies & Third services:**](#technologies--third-services)
     - [**coming improvement:**](#coming-improvement)
@@ -187,6 +188,47 @@ represnting to clients and is the layer that the hole application build around.
 ![](https://i.imgur.com/ppWrzjY.png)
 
 <br><br>
+
+### **Security Features Implemented:**
+
+<br>
+
+goAheadTravel project includes a bunch of common security features that prevents common web applications attacks and threats, below a summary:
+
+- 🚨️ COMPROMISED DATABASES:
+  - 👉️ The main idea: The attacker try to guess the password by trying millions and millions of passwords until he find the right one.
+  - ✅️ preventive measures implemented:
+    - Strongly encrypt passwords using salt and hash (bcrypt)
+    - Strongly encrypt passwords reset token (SHA 256)
+
+- 🚨️ BRUTE FORCE ATTACKS:
+  - 👉️ The main idea: The attacker try to guess the password by trying millions and millions of passwords until he find the right one.
+  - ✅️ preventive measures implemented:
+    - Use bcrypt (to make login requests slow)
+    - Implement rate limiting (express-rate-limit)
+    - Implement maximum login attempts
+
+- 🚨️ CROSS-SITE SCRIPTING (XSS) ATTACKS:
+  - 👉️ The main idea: The attacker try to inject scripts in our page to run his milicious code. On the client's side, this is especially dangerous because it allows the attacker to read the localstorage, which is the reason that why we never store the JWT in localstorage.
+  - ✅️ preventive measures implemented:
+    - Store JWT in HTTPOnly cookies (so the user can send and recieve cookie instead of the JWT)
+    - Sanitize user input data
+    - Set especial HTTP headers (helmet package)
+
+- 🚨️ DENIAL-OF-SERVICE ATTACKS:
+  - 👉️ The main idea: It happens  when the attacker send so many requests to a server that it breaks down and the application becomes unavailable.
+  - ✅️ preventive measures implemented:
+    - Implement rate limiting (express-rate-limit)
+    - Limit playload data (send with patch and post requests)
+    - Avoid Evil regular expressions (these regular expressions take an exponential time for non-matching inputs)
+
+- 🚨️ NOSQL QUERIES INJECTION ATTACKS:
+  - 👉️ The main idea: It happens when attackers instead of inputing valid data, injects some queries in order to create a query expressions that it gonna to translate to true Exp: logged in without providing a valid username and password.
+  - ✅️ preventive measures implemented:
+    - Use mongoose for mongoDB (because of schemaTypes)
+    - Sanitize user input data
+
+<br>
 
 ### **Stripe Implementation & Stripe webhooks logic:**
 
